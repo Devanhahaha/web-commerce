@@ -26,11 +26,13 @@ Route::get('/login', function () {
 
 Route::post('/login/process', [LoginController::class, 'checkAuth'])->name('login.process');
 Route::post('/register/process', [LoginController::class, 'store'])->name('register.process');
+
+Route::get('/admin/dashboard', function () {
+    return view('dashboard');
+})->name('dashboard');
+
 Route::post('/forgot-password/process', [LoginController::class, 'SendEmail'])->name('forgot.password');
 Route::group(['middleware' => ['role:admin']], function () {
-    Route::get('/admin/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
 
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
