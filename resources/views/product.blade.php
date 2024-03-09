@@ -1,5 +1,9 @@
 @extends('layout.admin.main')
 
+@section('css')
+
+@endsection
+
 @section('content')
 <main>
     <div class="container-fluid px-4">
@@ -42,7 +46,7 @@
                                 <td>{{ $item->deskripsi }}</td>
                                 <td>
                                     <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Edit</a>
-                                    <a href="{{ route('product.delete', $item->id) }}" class="btn btn-danger">Hapus</button>
+                                    <button type="button" onclick="confirm('{{ $item->id }}')" class="btn btn-danger">Hapus</button>
                                 </td>
                             </tr>
                         @endforeach
@@ -52,4 +56,30 @@
             </div>
         </div>
     </main>
+    @endsection
+
+    @section('js')
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> 
+    <script>
+        function confirm(id) {
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = `{{ route('product.delete') }}/`+id //http://......./product-delete/2
+                    Swal.fire({
+                    title: "Deleted!",
+                    text: "Your file has been deleted.",
+                    icon: "success"
+                    });
+                }
+            });
+        }
+    </script>
     @endsection

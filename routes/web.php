@@ -43,7 +43,7 @@ Route::group(['middleware' => ['role:admin']], function () {
     Route::get('/product/edit/{id}', [ProductController::class, 'edit'])->name('product.edit');
     Route::put('/product/update', [ProductController::class, 'update'])->name('product.update');
 
-    Route::get('/product/delete/{id}', [ProductController::class, 'destroy'])->name('product.delete');
+    Route::get('/product/delete/{id?}', [ProductController::class, 'destroy'])->name('product.delete');
 });
 
 
