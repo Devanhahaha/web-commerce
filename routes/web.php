@@ -36,6 +36,7 @@ Route::group(['middleware' => ['role:admin']], function () {
 
     Route::get('/transaksi', [TransaksiController::class, 'index'])->name('transaksi.index');
     Route::get('/product', [ProductController::class, 'index'])->name('product.index');
+    
 
     Route::get('/product/add', [ProductController::class, 'create'])->name('product.create');
     Route::post('/product/store', [ProductController::class, 'store'])->name('product.store');
