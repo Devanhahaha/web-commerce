@@ -53,18 +53,32 @@ class ProductController extends Controller
      * Show the form for editing the specified resource.
      */
     public function edit(string $id)
-    {
+{
+    try {
         $product = Product::findOrFail($id);
         return view('product.edit', compact('product'));
-        return redirect()->back()->with('success', 'Product edit successfully.');
+    } catch (\Exception $exception) {
+        return redirect()->back()->with('error', 'Product not found.');
     }
+}
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
+        try {
+            $product = Product::findOrFail($id);
+            $product->update($request->all());
+    
+            
+    
+           
+    return redirect()->route('product.edit', $product->id)->with('success', 'Product edited successfully.');
+        } catch (\Exception $exception) {
+            return redirect()->back()->with('error', 'Product not found.');
+        }
     }
 
     /**

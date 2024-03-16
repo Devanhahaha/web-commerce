@@ -7,7 +7,7 @@
 @section('content')
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Product Devan</h1>
+        <h1 class="mt-4">Product</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item">Home</li>
             <li class="breadcrumb-item active">Product</li>
@@ -18,6 +18,11 @@
                 List Product
             </div>
             <div class="card-body">
+                @if(session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
                 <div class="row">
                     <div class="col-12">
                         <a href="{{ route('product.create') }}" class="btn btn-primary mb-4">Tambah Product</a>
