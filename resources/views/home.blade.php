@@ -6,8 +6,8 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>DEVAN CELL</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
+        <!-- icon-->
+        <link rel="icon" type="image/x-icon" href="assets/logo-tab.png" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -15,6 +15,11 @@
         <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css" />
         <!-- Core theme CSS (includes Bootstrap)-->
         <link href="css/styles.css" rel="stylesheet" />
+        <style>
+            .payment-img{
+                height: 100px !important;
+            }
+        </style>
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -29,7 +34,7 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="#product">Product</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#about">Payment</a></li>
                         <li class="nav-item"><a class="nav-link" href="#maps">Maps</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                         <li class="nav-item">
@@ -58,8 +63,24 @@
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
                             <i class="fas fa-credit-card fa-stack-1x fa-inverse"></i>
                         </span>
-                        <h4 class="my-3">Pulsa & Pembayaran</h4>
+                        <h4 class="my-3">Pulsa</h4>
                         <p class="text-muted">Selamat datang di layanan Pulsa dan Pembayaran Menyediakan Kemudahan dan Kepuasan untuk Setiap Transaksi Anda!</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-wrench fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Paket Data</h4>
+                        <p class="text-muted">Lorem Ipsum.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <span class="fa-stack fa-4x">
+                            <i class="fas fa-circle fa-stack-2x text-primary"></i>
+                            <i class="fas fa-globe fa-stack-1x fa-inverse"></i>
+                        </span>
+                        <h4 class="my-3">Bayar Tagihan</h4>
+                        <p class="text-muted">Lorem Ipsum.</p>
                     </div>
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
@@ -95,10 +116,10 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/1.jpg" alt="..." />
+                                <img class="img-fluid" src="assets/img/portfolio/samsung.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Threads</div>
+                                <div class="portfolio-caption-heading">Handphone</div>
                                 <div class="portfolio-caption-subheading text-muted">Illustration</div>
                             </div>
                         </div>
@@ -113,7 +134,7 @@
                                 <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Explore</div>
+                                <div class="portfolio-caption-heading">Headset</div>
                                 <div class="portfolio-caption-subheading text-muted">Graphic Design</div>
                             </div>
                         </div>
@@ -182,13 +203,22 @@
             </div>
         </section>
         <!-- About-->
-        <section class="page-section" id="about">
+        <section class="page-section" id="payment">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">About</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
-                </div>
-                <ul class="timeline">
+                    <h2 class="section-heading text-uppercase">Payment</h2>
+                    <h3 class="section-subheading text-muted">Pilihan metode pembayaran yang memudahkan anda.</h3>
+               
+                    <div class="payment-image">
+                        <img class="img-fluid payment-img" src="assets/img/payment/dana.png" alt=" "/>
+                        <img class="img-fluid payment-img" src="assets/img/payment/virtuala.png" alt=" "/>
+                        <img class="img-fluid payment-img" src="assets/img/payment/shopeepay.jpeg" alt=" "/>                    
+                        <img class="img-fluid payment-img" src="assets/img/payment/alfamart.jpeg" alt=" "/>
+                        <img class="img-fluid payment-img" src="assets/img/payment/indomaret.jpeg" alt=" ">
+                    </div>
+               
+                {{-- </div> --}}
+                {{-- <ul class="timeline">
                     <li>
                         <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." /></div>
                         <div class="timeline-panel">
@@ -241,7 +271,7 @@
                         </div>
                     </li>
                 </ul>
-            </div>
+            </div> --}}
         </section>
         <!--Maps-->
         <section class="page-section bg-light" id="maps">
@@ -250,7 +280,7 @@
                     <h2 class="section-heading text-uppercase">Maps</h2>
                     <h3 class="section-subheading text-muted">Letak Lokasi Toko Devan Cell</h3>
                 </div>
-                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2823222185093!2d108.1775344735584!3d-6.485887263409887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec900744dcb7f%3A0xca7a6436039e7dd9!2sDevan%20Cell!5e0!3m2!1sid!2sid!4v1709803859898!5m2!1sid!2sid" width="1100" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                <iframe class="text-center" width="1300" height="700" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2823222185093!2d108.1775344735584!3d-6.485887263409887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec900744dcb7f%3A0xca7a6436039e7dd9!2sDevan%20Cell!5e0!3m2!1sid!2sid!4v1709803859898!5m2!1sid!2sid" width="1100" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </section>
         <!-- Clients-->
         {{-- <div class="py-5">

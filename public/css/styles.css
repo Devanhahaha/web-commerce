@@ -11314,3 +11314,9 @@ section#contact form#contactForm :-ms-input-placeholder {
   font-size: 0.9rem;
   font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 }
+
+.payment-images img {
+  border: 2px solid #000; /* Ubah warna, ketebalan, dan jenis border sesuai kebutuhan */
+  padding: 5px; /* Jarak antara border dengan gambar */
+  margin: 5px; /* Jarak antara gambar */
+}
