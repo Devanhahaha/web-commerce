@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
@@ -30,13 +31,22 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $file = $request->file('gambar');
+        $path = 'files/product/';
+        $nameFile = $file->getClientOriginalName();
         Product::create([
             'nama_product' => $request->name,
             'jenis' => $request->jenis,
             'merk' => $request->merk,
             'deskripsi' => $request->deskripsi,
-            'gambar' => 'gambar'
+            'gambar' => $path.$nameFile
         ]);
+
+        
+
+        if(!File::isDirectory($path)) File::makeDirectory($path, 0755, true, true);
+
+        $file->move($path, $nameFile);
 
         return redirect()->route('product.index')->with('success', 'Data berhasil ditambahkan');
     }

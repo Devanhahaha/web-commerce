@@ -44,7 +44,7 @@
                         @foreach ($product as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->gambar }}</td>
+                                <td><img src="{{ asset($item->gambar) }}" style="max-width: 100px"></td>
                                 <td>{{ $item->nama_product }}</td>
                                 <td>{{ $item->jenis }}</td>
                                 <td>{{ $item->merk }}</td>
