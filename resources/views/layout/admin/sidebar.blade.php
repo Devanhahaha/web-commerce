@@ -22,7 +22,7 @@
                             <a class="nav-link" href="{{ route('pulsa.index') }}">Pulsa</a>
                             <a class="nav-link" href="{{ route('paket_data.index') }}">Paket Data</a>
                             <a class="nav-link" href="{{ route('bayar_tagihan.index') }}">Bayar Tagihan</a>
-                            <a class="nav-link" href="{{ route('services.index') }}">Services</a>
+                            <a class="nav-link" href="{{ route('services.index') }}">Service</a>
                         </nav>
                     </div>
                 </a>
@@ -40,7 +40,7 @@
         </div>
         <div class="sb-sidenav-footer">
             <div class="small">Logged in as:</div>
-            {{ auth()->User()->first_name}}
+            {{ auth()?->User()->first_name ?? '-'}}
         </div>
     </nav>
 </div>
