@@ -69,7 +69,7 @@
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-wrench fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-globe fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Paket Data</h4>
                         <p class="text-muted">Lorem Ipsum.</p>
@@ -77,7 +77,7 @@
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
                             <i class="fas fa-circle fa-stack-2x text-primary"></i>
-                            <i class="fas fa-globe fa-stack-1x fa-inverse"></i>
+                            <i class="fas fa-money-bill fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Bayar Tagihan</h4>
                         <p class="text-muted">Lorem Ipsum.</p>
@@ -301,7 +301,7 @@
                 </div>
             </div>
         </div> --}}
-        <!-- Contact-->
+        {{-- <!-- Contact-->
         <section class="page-section" id="contact">
             <div class="container">
                 <div class="text-center">
@@ -364,7 +364,7 @@
                     <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
                 </form>
             </div>
-        </section>
+        </section> --}}
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">

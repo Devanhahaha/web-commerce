@@ -1,30 +1,32 @@
-@extends('layout.admin.main')
+@extends('layout.customer.maincust')
 
 @section('content')
 <main>
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Service</h1>
+        <h1 class="mt-4">Paket Data</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item">Home</li>
-            <li class="breadcrumb-item active">Service</li>
+            <li class="breadcrumb-item active">Paket Data</li>
         </ol>
-        <form action="{{ route('paket_data.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('paket_datacust.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Nama</label>
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">
-                <label for="number" class="form-label">Jenis Hp</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="mb-3">
-                <label for="jenis" class="form-label">Deskripsi Keluhan</label>
-                <input type="text" class="form-control" id="name" name="name" readonly>
-            </div>
-            <div class="mb-3">
-                <label for="nominal" class="form-label">Kontak</label>
+                <label for="number" class="form-label">Nomor Telp</label>
                 <input type="text" class="form-control" id="number" name="number" required>
+            </div>
+            <div class="mb-3">
+                <label for="jenis" class="form-label">Jenis Kartu</label>
+                <input type="text" class="form-control" id="jenis" name="jenis" readonly>
+            </div>
+            <div class="mb-3">
+                <label for="nominal" class="form-label">Pilih Paket</label>
+                <select class="form-select" id="nominal" name="nominal" required>
+                    <option value="">Pilih Paket Data</option>
+                </select>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
