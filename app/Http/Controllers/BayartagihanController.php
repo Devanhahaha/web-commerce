@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
+use App\Models\Bayartagihan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class BayartagihanController extends Controller
 {
@@ -19,7 +22,7 @@ class BayartagihanController extends Controller
      */
     public function create()
     {
-        //
+        return view('addbayar_tagihan');
     }
 
     /**
@@ -27,7 +30,37 @@ class BayartagihanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name' => 'required|alpha',
+            'jenis_tagihan' => 'required|in:PLN,BPJS',
+            'nomor_tagihan' => 'required|string|max:255',
+            'nominal' => 'required|numeric',
+        ]);
+
+        $jenis = 'BAYARTAGIHAN';
+        $prefix = "TRX-$jenis-";
+        $uniquePart = uniqid();
+        $code = strtoupper($prefix . substr($uniquePart, -6));
+
+        $transaksi = Transaksi::create([
+            'user_id' => Auth::user()->id,
+            'order_id' => $code,
+            'status' => 'lunas',
+            'jenis_transaksi' => $jenis,
+            'jenis_pembayaran' => 'cash'
+        ]);
+
+        $nominal = str_replace('.', '', $request->nominal);
+
+        Bayartagihan::create([
+            'transaksi_id' => $transaksi->id,
+            'nama' => $request->name,
+            'tipe_tagihan' => $request->jenis_tagihan,
+            'no_tagihan' => $request->nomor_tagihan,
+            'nominal' => $nominal,
+        ]);
+        return redirect()->route('laporanbayartagihan.index');
     }
 
     /**

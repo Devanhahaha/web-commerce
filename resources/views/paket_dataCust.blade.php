@@ -8,7 +8,7 @@
             <li class="breadcrumb-item">Home</li>
             <li class="breadcrumb-item active">Paket Data</li>
         </ol>
-        <form action="{{ route('paket_datacust.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('paket_dataCust.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="mb-3">
                 <label for="name" class="form-label">Nama</label>
@@ -28,24 +28,23 @@
                     <option value="">Pilih Paket Data</option>
                 </select>
             </div>
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">Bayar</button>
         </form>
     </div>
 </main>
 
 <script>
-    // Fungsi untuk mendeteksi jenis kartu berdasarkan nomor telepon
     function detectJenisKartu() {
         var nomorTelp = document.getElementById("number").value;
-        if (nomorTelp.startsWith("0813")) {
+        if (nomorTelp.startsWith("0812")) {
             return "Telkomsel";
-        } else if (nomorTelp.startsWith("0815")) {
+        } else if (nomorTelp.startsWith("0857")) {
             return "Indosat";
         } else if (nomorTelp.startsWith("0831")) {
             return "Axis";
-        } else if (nomorTelp.startsWith("0817")) {
+        } else if (nomorTelp.startsWith("0877")) {
             return "XL";
-        } else if (nomorTelp.startsWith("0899")) {
+        } else if (nomorTelp.startsWith("0895")) {
             return "Three";
         } else {
             return "Unknown";
@@ -54,45 +53,46 @@
 
     // Fungsi untuk mengisi pilihan paket data berdasarkan jenis kartu
     function populatePaketData() {
-        var jenisKartu = detectJenisKartu();
-        var selectElement = document.getElementById("nominal");
+    var jenisKartu = detectJenisKartu();
+    var selectElement = document.getElementById("nominal");
 
-        // Kosongkan pilihan paket data
-        selectElement.innerHTML = '<option value="">Pilih Paket Data</option>';
+    // Kosongkan pilihan paket data
+    selectElement.innerHTML = '<option value="">Pilih Paket Data</option>';
 
-        // Tambahkan pilihan paket data berdasarkan jenis kartu
-        if (jenisKartu === "Telkomsel") {
-            selectElement.innerHTML += `
-                <option value="Paket A">1,5GB 3 Hari</option>
-                <option value="Paket B">2,5GB 5 Hari</option>
-                <option value="Paket C">5GB 30 Hari</option>
-            `;
-        } else if (jenisKartu === "Indosat") {
-            selectElement.innerHTML += `
-                <option value="Paket X">1GB 5 Hari</option>
-                <option value="Paket Y">2GB 15 Hari</option>
-                <option value="Paket Z">3GB 10 Hari</option>
-            `;
-        } else if (jenisKartu === "Axis") {
-            selectElement.innerHTML += `
-                <option value="Paket M">1,5GB 5 Hari</option>
-                <option value="Paket N">2GB 5 Hari</option>
-                <option value="Paket O">10GB 30 Hari</option>
-            `;
-        } else if (jenisKartu === "XL") {
-            selectElement.innerHTML += `
-                <option value="Paket P">2GB 5 Hari</option>
-                <option value="Paket Q">4GB 15 Hari</option>
-                <option value="Paket R">5GB 30 Hari</option>
-            `;
-        } else if (jenisKartu === "Three") {
-            selectElement.innerHTML += `
-                <option value="Paket S">2GB 5 Hari</option>
-                <option value="Paket T">6GB 15 Hari</option>
-                <option value="Paket U">7GB 30 Hari</option>
-            `;
-        } 
-    }
+    // Tambahkan pilihan paket data berdasarkan jenis kartu
+    if (jenisKartu === "Telkomsel") {
+        selectElement.innerHTML += `
+            <option>10GB - Rp. 50.000 - {{ $paket->where('name', 'Paketdata Telkomsel 10GB')->first()->value }}</option>
+            <option>1,5GB - Rp. 20.000 - {{ $paket->where('name', 'Paketdata Telkomsel 1.5GB')->first()->value }}</option>
+            <option>14GB - Rp. 75.000 - {{ $paket->where('name', 'Paketdata Telkomsel 14GB')->first()->value }}</option>
+        `;
+    } else if (jenisKartu === "Indosat") {
+        selectElement.innerHTML += `
+            <option>90GB - Rp. 100.000 - {{ $paket->where('name', 'Paketdata Indosat 90GB')->first()->value }}</option>
+            <option>30GB - Rp. 50.000 - {{ $paket->where('name', 'Paketdata Indosat 30GB')->first()->value }}</option>
+            <option>10GB - Rp. 25.000 - {{ $paket->where('name', 'Paketdata Indosat 10GB')->first()->value }}</option>
+        `;
+    } else if (jenisKartu === "Axis") {
+        selectElement.innerHTML += `
+            <option>1,5GB - Rp. 15.000 - {{ $paket->where('name', 'Paketdata Axis 1.5GB')->first()->value }}</option>
+            <option>3GB - Rp. 25.000 - {{ $paket->where('name', 'Paketdata Axis 3GB')->first()->value }}</option>
+            <option>10GB - Rp. 50.000 - {{ $paket->where('name', 'Paketdata Axis 10GB')->first()->value }}</option>
+        `;
+    } else if (jenisKartu === "XL") {
+        selectElement.innerHTML += `
+            <option>66GB - Rp. 70.000 - {{ $paket->where('name', 'Paketdata XL 66GB')->first()->value }}</option>
+            <option>186GB - Rp. 150.000 - {{ $paket->where('name', 'Paketdata XL 186GB')->first()->value }}</option>
+            <option>122GB - Rp. 120.000 - {{ $paket->where('name', 'Paketdata XL 122GB')->first()->value }}</option>
+        `;
+    } else if (jenisKartu === "Three") {
+        selectElement.innerHTML += `
+            <option>9GB - Rp. 45.000 - {{ $paket->where('name', 'Paketdata Three 9GB')->first()->value }}</option>
+            <option>42GB - Rp. 90.000 - {{ $paket->where('name', 'Paketdata Three 42GB')->first()->value }}</option>
+            <option>30GB - Rp. 75.000 - {{ $paket->where('name', 'Paketdata Three 30GB')->first()->value }}</option>
+        `;
+    } 
+}
+
 
     // Setel jenis kartu pelanggan saat input nomor telepon berubah
     document.getElementById("number").addEventListener("input", function() {

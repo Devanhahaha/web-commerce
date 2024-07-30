@@ -34,7 +34,7 @@
                     <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
                         <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
                         <li class="nav-item"><a class="nav-link" href="#product">Product</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#about">Payment</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#payment">Payment</a></li>
                         <li class="nav-item"><a class="nav-link" href="#maps">Maps</a></li>
                         <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
                         <li class="nav-item">
@@ -72,7 +72,7 @@
                             <i class="fas fa-globe fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Paket Data</h4>
-                        <p class="text-muted">Lorem Ipsum.</p>
+                        <p class="text-muted">Nikmati Browsing, Streaming, dan Gaming Tanpa Khawatir Kuota Habis! Promo Paket Data Terbaik Ada di Sini!</p>
                     </div>
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
@@ -80,7 +80,7 @@
                             <i class="fas fa-money-bill fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Bayar Tagihan</h4>
-                        <p class="text-muted">Lorem Ipsum.</p>
+                        <p class="text-muted">Hindari Keterlambatan Bayar Tagihan dengan Layanan Kami yang Cepat dan Aman! Segera Coba Sekarang!</p>
                     </div>
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
@@ -88,7 +88,7 @@
                             <i class="fas fa-wrench fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Service Handphone</h4>
-                        <p class="text-muted">Memberikan layanan reparasi perbaikan ataupun service HP Android untuk membantu menyelesaikan berbagai kerusakan pada handphone.</p>
+                        <p class="text-muted">Dapatkan Kembali Performa Terbaik Handphone Anda! Service Handphone Profesional dan Berpengalaman!</p>
                     </div>
                     <div class="col-md-4">
                         <span class="fa-stack fa-4x">
@@ -96,17 +96,17 @@
                             <i class="fas fa-shopping-cart fa-stack-1x fa-inverse"></i>
                         </span>
                         <h4 class="my-3">Shop</h4>
-                        <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima maxime quam architecto quo inventore harum ex magni, dicta impedit.</p>
+                        <p class="text-muted">Layanan Lengkap untuk Hidup Lebih Praktis! Paket Data, Bayar Tagihan, Service Handphone, dan Produk Berkualitas Hanya untuk Anda!</p>
                     </div>
                 </div>
             </div>
         </section>
         <!-- Portfolio Grid-->
-        <section class="page-section bg-light" id="portfolio">
+        <section class="page-section bg-light" id="product">
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Product</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h3 class="section-subheading text-muted">Lengkapi Hidupmu dengan Produk Berkualitas! Promo Menarik untuk Semua Produk, Hanya di Toko Kami!</h3>
                 </div>
                 <div class="row">
                     <div class="col-lg-4 col-sm-6 mb-4">
@@ -131,7 +131,7 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/2.jpg" alt="..." />
+                                <img class="img-fluid" src="assets/img/portfolio/hedset.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
                                 <div class="portfolio-caption-heading">Headset</div>
@@ -146,10 +146,10 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/3.jpg" alt="..." />
+                                <img class="img-fluid" src="assets/img/portfolio/charger 1.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Finish</div>
+                                <div class="portfolio-caption-heading">Charger</div>
                                 <div class="portfolio-caption-subheading text-muted">Identity</div>
                             </div>
                         </div>
@@ -161,10 +161,10 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/4.jpg" alt="..." />
+                                <img class="img-fluid" src="assets/img/portfolio/usb.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Lines</div>
+                                <div class="portfolio-caption-heading">Kabel USB</div>
                                 <div class="portfolio-caption-subheading text-muted">Branding</div>
                             </div>
                         </div>
@@ -176,10 +176,10 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/5.jpg" alt="..." />
+                                <img class="img-fluid" src="assets/img/portfolio/kasing.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Southwest</div>
+                                <div class="portfolio-caption-heading">Kasing HP</div>
                                 <div class="portfolio-caption-subheading text-muted">Website Design</div>
                             </div>
                         </div>
@@ -191,10 +191,10 @@
                                 <div class="portfolio-hover">
                                     <div class="portfolio-hover-content"><i class="fas fa-plus fa-3x"></i></div>
                                 </div>
-                                <img class="img-fluid" src="assets/img/portfolio/6.jpg" alt="..." />
+                                <img class="img-fluid" src="assets/img/portfolio/power bank.jpg" alt="..." />
                             </a>
                             <div class="portfolio-caption">
-                                <div class="portfolio-caption-heading">Window</div>
+                                <div class="portfolio-caption-heading">Power Bank</div>
                                 <div class="portfolio-caption-subheading text-muted">Photography</div>
                             </div>
                         </div>
@@ -202,13 +202,12 @@
                 </div>
             </div>
         </section>
-        <!-- About-->
+        <!--payment-->
         <section class="page-section" id="payment">
             <div class="container">
                 <div class="text-center">
                     <h2 class="section-heading text-uppercase">Payment</h2>
                     <h3 class="section-subheading text-muted">Pilihan metode pembayaran yang memudahkan anda.</h3>
-               
                     <div class="payment-image">
                         <img class="img-fluid payment-img" src="assets/img/payment/dana.png" alt=" "/>
                         <img class="img-fluid payment-img" src="assets/img/payment/virtuala.png" alt=" "/>
@@ -216,62 +215,6 @@
                         <img class="img-fluid payment-img" src="assets/img/payment/alfamart.jpeg" alt=" "/>
                         <img class="img-fluid payment-img" src="assets/img/payment/indomaret.jpeg" alt=" ">
                     </div>
-               
-                {{-- </div> --}}
-                {{-- <ul class="timeline">
-                    <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/1.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>2009-2011</h4>
-                                <h4 class="subheading">Our Humble Beginnings</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/2.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>March 2011</h4>
-                                <h4 class="subheading">An Agency is Born</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/3.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>December 2015</h4>
-                                <h4 class="subheading">Transition to Full Service</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image"><img class="rounded-circle img-fluid" src="assets/img/about/4.jpg" alt="..." /></div>
-                        <div class="timeline-panel">
-                            <div class="timeline-heading">
-                                <h4>July 2020</h4>
-                                <h4 class="subheading">Phase Two Expansion</h4>
-                            </div>
-                            <div class="timeline-body"><p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p></div>
-                        </div>
-                    </li>
-                    <li class="timeline-inverted">
-                        <div class="timeline-image">
-                            <h4>
-                                Be Part
-                                <br />
-                                Of Our
-                                <br />
-                                Story!
-                            </h4>
-                        </div>
-                    </li>
-                </ul>
-            </div> --}}
         </section>
         <!--Maps-->
         <section class="page-section bg-light" id="maps">
@@ -301,70 +244,26 @@
                 </div>
             </div>
         </div> --}}
-        {{-- <!-- Contact-->
-        <section class="page-section" id="contact">
+        <!-- Contact-->
+        <section class="page-section" id="contact" style="background-color: #343a40; color: white;">
             <div class="container">
                 <div class="text-center">
-                    <h2 class="section-heading text-uppercase">Contact Us</h2>
-                    <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+                    <h2 class="section-heading text-uppercase">Hubungi Kami</h2>
+                    <h3 class="section-subheading text-muted">Jika Anda Mengalami Hal Yang Tidak Diinginkan, Silahkan Hubungi Kami</h3>
                 </div>
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- * * SB Forms Contact Form * *-->
-                <!-- * * * * * * * * * * * * * * *-->
-                <!-- This form is pre-integrated with SB Forms.-->
-                <!-- To make this form functional, sign up at-->
-                <!-- https://startbootstrap.com/solution/contact-forms-->
-                <!-- to get an API token!-->
-                <form id="contactForm" data-sb-form-api-token="API_TOKEN">
-                    <div class="row align-items-stretch mb-5">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <!-- Name input-->
-                                <input class="form-control" id="name" type="text" placeholder="Your Name *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
-                            </div>
-                            <div class="form-group">
-                                <!-- Email address input-->
-                                <input class="form-control" id="email" type="email" placeholder="Your Email *" data-sb-validations="required,email" />
-                                <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                                <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
-                            </div>
-                            <div class="form-group mb-md-0">
-                                <!-- Phone number input-->
-                                <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" data-sb-validations="required" />
-                                <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group form-group-textarea mb-md-0">
-                                <!-- Message input-->
-                                <textarea class="form-control" id="message" placeholder="Your Message *" data-sb-validations="required"></textarea>
-                                <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
-                            </div>
+                <div class="row align-items-stretch mb-5">
+                    <div class="col-md-12">
+                        <div class="text-center">
+                            <p>Jika Anda memerlukan bantuan, silakan hubungi admin kami:</p>
+                            <p><strong>Email:</strong> devanherdiansyah74@gmail.com</p>
+                            <p><strong>Telepon:</strong> 083157174554</p>
                         </div>
                     </div>
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center text-white mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                            To activate this form, sign up at
-                            <br />
-                            <a href="https://startbootstrap.com/solution/contact-forms">https://startbootstrap.com/solution/contact-forms</a>
-                        </div>
-                    </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
-                    <!-- Submit Button-->
-                    <div class="text-center"><button class="btn btn-primary btn-xl text-uppercase disabled" id="submitButton" type="submit">Send Message</button></div>
-                </form>
+                </div>
             </div>
-        </section> --}}
+        </section>
+        
+        
         <!-- Footer-->
         <footer class="footer py-4">
             <div class="container">
@@ -393,10 +292,10 @@
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/1.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <h2 class="text-uppercase">Samsung</h2>
+                                    <p class="item-intro text-muted">Inovasi Tiada Henti dengan Samsung.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/samsung.jpg" alt="..." />
+                                    <p>Rasakan kecanggihan yang menyatu dalam genggaman Anda dengan Samsung Galaxy. Dengan desain elegan dan fitur revolusioner, smartphone ini siap menemani setiap langkah perjalanan Anda.</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -428,10 +327,10 @@
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/2.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <h2 class="text-uppercase">Headset</h2>
+                                    <p class="item-intro text-muted">Suara Jernih, Pengalaman Tanpa Batas</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/hedset.jpg" alt="..." />
+                                    <p>Nikmati setiap nada dengan headset berkualitas tinggi yang memberikan kejernihan suara dan kenyamanan maksimal. Dengan teknologi noise-cancelling, tenggelam dalam musik tanpa gangguan dari dunia luar.</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -463,10 +362,10 @@
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/3.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <h2 class="text-uppercase">Charger</h2>
+                                    <p class="item-intro text-muted">Isi Daya dalam Sekejap.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/charger 1.jpg" alt="..." />
+                                    <p>Jangan biarkan perangkat Anda kehabisan daya. Dengan charger cepat, nikmati pengisian yang lebih cepat dan efisien. Tetap produktif dan terhubung tanpa harus menunggu lama.</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -498,10 +397,10 @@
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/4.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <h2 class="text-uppercase">Kabel USB</h2>
+                                    <p class="item-intro text-muted">Konektivitas Tanpa Batas.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/usb.jpg" alt="..." />
+                                    <p>Nikmati konektivitas yang cepat dan andal dengan kabel USB berkualitas tinggi. Transfer data dengan mudah dan isi daya perangkat Anda dengan efisien menggunakan kabel USB yang tahan lama dan serbaguna.</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -533,10 +432,10 @@
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/5.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <h2 class="text-uppercase">Kasing HP</h2>
+                                    <p class="item-intro text-muted">Perlindungan Maksimal, Gaya Optimal.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/kasing.jpg" alt="..." />
+                                    <p>Jaga smartphone Anda tetap aman dan tampil gaya dengan casing HP berkualitas tinggi. Perlindungan maksimal dari benturan, goresan, dan debu dengan desain yang elegan dan modern.</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>
@@ -568,10 +467,10 @@
                             <div class="col-lg-8">
                                 <div class="modal-body">
                                     <!-- Project details-->
-                                    <h2 class="text-uppercase">Project Name</h2>
-                                    <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
-                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/6.jpg" alt="..." />
-                                    <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                                    <h2 class="text-uppercase">Power Bank</h2>
+                                    <p class="item-intro text-muted">Daya Tahan Tinggi.</p>
+                                    <img class="img-fluid d-block mx-auto" src="assets/img/portfolio/power bank.jpg" alt="..." />
+                                    <p>Dengan kapasitas besar, power bank kami memastikan Anda tetap terhubung sepanjang hari tanpa khawatir kehabisan baterai.</p>
                                     <ul class="list-inline">
                                         <li>
                                             <strong>Client:</strong>

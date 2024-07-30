@@ -11,6 +11,23 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
+
+    use Notifiable;
+
+    // Your existing code...
+
+    /**
+     * Check if the user is an admin.
+     *
+     * @return bool
+     */
+    public function isAdmin()
+    {
+        // Assuming you have a role field or a similar way to determine if a user is an admin.
+        // Adjust the condition according to your application's logic.
+        return $this->role === 'admin';
+    }
+    
     use HasApiTokens, HasFactory, Notifiable, HasRoles;
 
     /**

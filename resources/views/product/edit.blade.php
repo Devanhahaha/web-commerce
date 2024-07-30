@@ -16,30 +16,36 @@
                     Edit Product
                 </div>
                 <div class="card-body">
-                    <form action="{{ route('product.update', $product->id) }}" method="POST">
+                    <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
 
                         <!-- Add your form fields here -->
                         <div class="mb-3">
-                            <label for="nama_product" class="form-label">Nama Product</label>
-                            <input type="text" class="form-control" id="nama_product" name="nama_product" value="{{ $product->nama_product }}">
+                            <label for="name" class="form-label">Product Name</label>
+                            <input type="text" class="form-control" id="name" name="name" required>
                         </div>
-
                         <div class="mb-3">
                             <label for="jenis" class="form-label">Jenis</label>
-                            <input type="text" class="form-control" id="jenis" name="jenis" value="{{ $product->jenis }}">
+                            <input type="text" class="form-control" id="jenis" name="jenis" required>
                         </div>
-
                         <div class="mb-3">
                             <label for="merk" class="form-label">Merk</label>
-                            <input type="text" class="form-control" id="merk" name="merk" value="{{ $product->merk }}">
+                            <input type="text" class="form-control" id="merk" name="merk" required>
                         </div>
-
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
-                            <textarea class="form-control" id="deskripsi" name="deskripsi">{{ $product->deskripsi }}</textarea>
+                            <input type="text" class="form-control" id="deskripsi" name="deskripsi" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label">Nominal</label>
+                            <input type="text" class="form-control" id="nominal" name="nominal" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="deskripsi" class="form-label">Gambar</label>
+                            <input type="file" accept=".png, .jpg, .jpeg, .svg, .webp" class="form-control" id="gambar" name="gambar"> 
+                        </div>
+                          
 
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>

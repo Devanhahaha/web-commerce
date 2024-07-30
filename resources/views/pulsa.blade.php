@@ -20,10 +20,16 @@
             </div>
             <div class="mb-3">
                 <label for="nominal" class="form-label">Nominal</label>
-                <input type="text" class="form-control" id="nominal" name="nominal" required>
+                <select class="form-select" id="nominal" name="nominal" required>
+                    <option value="12000">Rp 10.000</option>
+                    <option value="22000">Rp 20.000</option>
+                    <option value="27000">Rp 25.000</option>
+                    <option value="52000">Rp 50.000</option>
+                    <option value="102000">Rp 100.000</option>
+                </select>
             </div>
             <div class="mb-3">
-                <label for="jenis" class="form-label">Jenis Kartu</label>
+                <label for="jenis" class="form-label">Tipe Kartu</label>
                 <input type="text" class="form-control" id="jenis" name="jenis" readonly>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -32,27 +38,33 @@
 </main>
 
 <script>
-    // Fungsi untuk mendeteksi jenis kartu berdasarkan nomor telepon
     function detectJenisKartu() {
         var nomorTelp = document.getElementById("number").value;
-        if (nomorTelp.startsWith("0813")) {
+        if (nomorTelp.startsWith("0812")) {
             return "Telkomsel";
-        } else if (nomorTelp.startsWith("0815")) {
+        } else if (nomorTelp.startsWith("0857")) {
             return "Indosat";
         } else if (nomorTelp.startsWith("0831")) {
             return "Axis";
-        } else if (nomorTelp.startsWith("0817")) {
+        } else if (nomorTelp.startsWith("0877")) {
             return "XL";
-        } else if (nomorTelp.startsWith("0899")) {
+        } else if (nomorTelp.startsWith("0895")) {
             return "Three";
         } else {
             return "Unknown";
         }
     }
 
-    // Setel jenis kartu pelanggan saat input nomor telepon berubah
+    
     document.getElementById("number").addEventListener("input", function() {
         document.getElementById("jenis").value = detectJenisKartu();
+    });
+
+    
+    document.querySelector('form').addEventListener('submit', function() {
+        var nominal = document.getElementById('nominal').value;
+        var stokPulsa = 0; 
+        var newStok = stokPulsa - parseInt(nominal);
     });
 </script>
 

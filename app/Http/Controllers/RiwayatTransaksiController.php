@@ -8,6 +8,7 @@ class RiwayatTransaksiController extends Controller
 {
     public function index()
     {
+        
         return view('riwayatTransaksi');
     }
     
