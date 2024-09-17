@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
-class TransaksiController extends Controller
+class RiwayatTransaksiBayarTagihanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('transaksi');
+        $data['transaksi'] = Transaksi::with(['pulsa'])->where('user_id', Auth::user()->id)->where('jenis_transaksi', 'BAYARTAGIHAN')->latest()->get();
+        return view('riwayatTransaksiBayarTagihan', $data);
     }
 
     /**

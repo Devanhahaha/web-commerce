@@ -18,6 +18,11 @@
                 List Product
             </div>
             <div class="card-body">
+                @if(session()->has('success'))
+        <div class="alert alert-success" role="alert">
+            {{ session('success') }}
+        </div>
+    @endif
                 <div class="row">
                     <div class="col-12">
                         <a href="{{ route('product.create') }}" class="btn btn-primary mb-4">Tambah Product</a>
@@ -32,6 +37,7 @@
                             <th>Jenis</th>
                             <th>Merk</th>
                             <th>Deskripsi</th>
+                            <th>Nominal</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -39,11 +45,12 @@
                         @foreach ($product as $item)
                             <tr>
                                 <td>{{ $loop->iteration }}</td>
-                                <td>{{ $item->gambar }}</td>
+                                <td><img src="{{ asset($item->gambar) }}" style="max-width: 100px"></td>
                                 <td>{{ $item->nama_product }}</td>
                                 <td>{{ $item->jenis }}</td>
                                 <td>{{ $item->merk }}</td>
                                 <td>{{ $item->deskripsi }}</td>
+                                <td>{{ $item->nominal }}</td>
                                 <td>
                                     <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Edit</a>
                                     <button type="button" onclick="confirm('{{ $item->id }}')" class="btn btn-danger">Hapus</button>
