@@ -20,10 +20,19 @@ class LoginController extends Controller
 
     public function checkAuth(Request $request){
         if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            return redirect()->route('dashboard');
+            if(Auth::user()->getRoleNames()->first() == 'admin'){
+                return redirect()->route('dashboard');
+            }else{
+                return redirect()->route('dashboardcust');
+            }
         }else{
             return redirect()->back()->with('error', 'Email atau Password anda salah!');
         }
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
     }
 
     public function sendEmail(Request $request){

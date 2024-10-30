@@ -37,6 +37,8 @@
                             <th>Jenis</th>
                             <th>Merk</th>
                             <th>Deskripsi</th>
+                            <th>Nominal</th>
+                            <th>Stok</th>
                             <th>Aksi</th>
                         </tr>
                     </thead>
@@ -49,6 +51,8 @@
                                 <td>{{ $item->jenis }}</td>
                                 <td>{{ $item->merk }}</td>
                                 <td>{{ $item->deskripsi }}</td>
+                                <td>{{ $item->nominal }}</td>
+                                <td>{{ $item->stok }}</td>
                                 <td>
                                     <a href="{{ route('product.edit', $item->id) }}" class="btn btn-warning">Edit</a>
                                     <button type="button" onclick="confirm('{{ $item->id }}')" class="btn btn-danger">Hapus</button>

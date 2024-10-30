@@ -35,7 +35,15 @@
                                 <input type="text" class="form-control" id="deskripsi" name="deskripsi" required>
                             </div>
                             <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Gambar</label>
+                                <label for="nominal" class="form-label">Nominal</label>
+                                <input type="text" class="form-control" id="nominal" name="nominal" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="stok" class="form-label">Stok</label>
+                                <input type="text" class="form-control" id="stok" name="stok" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="gambar" class="form-label">Gambar</label>
                                 <input type="file" accept=".png, .jpg, .jpeg, .svg, .webp" class="form-control" id="gambar" name="gambar" required>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit</button>

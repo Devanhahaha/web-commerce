@@ -1,0 +1,18 @@
+[05-Jul-2024 03:18:15 UTC] PHP Fatal error:  Declaration of Monolog\Logger::emergency(Stringable|string $message, array $context = []): void must be compatible with PsrExt\Log\LoggerInterface::emergency($message, array $context = []) in /home/devancel/public_html/vendor/monolog/monolog/src/Monolog/Logger.php on line 681
+[05-Jul-2024 03:18:15 UTC] PHP Fatal error:  Uncaught Error: Class "Monolog\Logger" not found in /home/devancel/public_html/vendor/monolog/monolog/src/Monolog/Handler/AbstractHandler.php:60
+Stack trace:
+#0 /home/devancel/public_html/vendor/monolog/monolog/src/Monolog/Handler/AbstractHandler.php(38): Monolog\Handler\AbstractHandler->setLevel()
+#1 /home/devancel/public_html/vendor/monolog/monolog/src/Monolog/Handler/StreamHandler.php(49): Monolog\Handler\AbstractHandler->__construct()
+#2 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(187): Monolog\Handler\StreamHandler->__construct()
+#3 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(141): Illuminate\Log\LogManager->createEmergencyLogger()
+#4 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(124): Illuminate\Log\LogManager->get()
+#5 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Log/LogManager.php(681): Illuminate\Log\LogManager->driver()
+#6 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(317): Illuminate\Log\LogManager->error()
+#7 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Exceptions/Handler.php(278): Illuminate\Foundation\Exceptions\Handler->reportThrowable()
+#8 /home/devancel/public_html/vendor/nunomaduro/collision/src/Adapters/Laravel/ExceptionHandler.php(46): Illuminate\Foundation\Exceptions\Handler->report()
+#9 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(183): NunoMaduro\Collision\Adapters\Laravel\ExceptionHandler->report()
+#10 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(231): Illuminate\Foundation\Bootstrap\HandleExceptions->handleException()
+#11 /home/devancel/public_html/vendor/laravel/framework/src/Illuminate/Foundation/Bootstrap/HandleExceptions.php(255): Illuminate\Foundation\Bootstrap\HandleExceptions->handleShutdown()
+#12 [internal function]: Illuminate\Foundation\Bootstrap\HandleExceptions->Illuminate\Foundation\Bootstrap\{closure}()
+#13 {main}
+  thrown in /home/devancel/public_html/vendor/monolog/monolog/src/Monolog/Handler/AbstractHandler.php on line 60

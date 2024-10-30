@@ -236,6 +236,27 @@ sup {
   vertical-align: baseline;
 }
 
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.quantity-controls button {
+  width: 40px;
+  height: 40px;
+  font-size: 18px;
+  padding: 0;
+  display: inline-block;
+  margin: 0 10px; 
+}
+
+.quantity-controls span {
+  font-size: 18px;
+  width: 50px;
+  text-align: center;
+}
+
 sub {
   bottom: -0.25em;
 }

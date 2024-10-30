@@ -1,17 +1,25 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
+use App\Models\Bayartagihan;
 use Illuminate\Http\Request;
 
-class ReportsController extends Controller
+class BayarTagihanController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('reports');
+        $bayartagihan = Bayartagihan::get();
+        return response()->json([
+            'status' => true,
+            'message' => 'success',
+            'data' => $bayartagihan,
+        ], 200);
+
     }
 
     /**

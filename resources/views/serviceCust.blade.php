@@ -15,12 +15,16 @@
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
             <div class="mb-3">
+                <label for="alamat" class="form-label">Alamat</label>
+                <input type="text" class="form-control" id="alamat" name="alamat" required>
+            </div>
+            <div class="mb-3">
                 <label for="number" class="form-label">Jenis Hp</label>
-                <input type="text" class="form-control" id="name" name="name" required>
+                <input type="text" class="form-control" id="jenis" name="jenis" required>
             </div>
             <div class="mb-3">
                 <label for="jenis" class="form-label">Deskripsi Keluhan</label>
-                <input type="text" class="form-control" id="name" name="name" readonly>
+                <input type="text" class="form-control" id="keluhan" name="keluhan" required>
             </div>
             <div class="mb-3">
                 <label for="nominal" class="form-label">Kontak</label>
@@ -30,27 +34,4 @@
         </form>
     </div>
 </main>
-
-<script>
-    // Fungsi untuk mendeteksi jenis kartu berdasarkan nomor telepon
-    function detectJenisKartu() {
-        var nomorTelp = document.getElementById("number").value;
-        if (nomorTelp.startsWith("0813")) {
-            return "Telkomsel";
-        } else if (nomorTelp.startsWith("0815")) {
-            return "Indosat";
-        } else if (nomorTelp.startsWith("0831")) {
-            return "Axis";
-        } else if (nomorTelp.startsWith("0817")) {
-            return "XL";
-        } else if (nomorTelp.startsWith("0899")) {
-            return "Three";
-        } else {
-            return "Unknown";
-        }
-    }
-
-
-</script>
-
 @endsection

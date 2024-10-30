@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
 class LaporanController extends Controller
@@ -11,7 +12,8 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        return view('laporan');
+        $data['transaksi'] = Transaksi::with(['pulsa', 'paketdata', 'bayartagihan', 'services', 'product'])->latest()->get();
+        return view('laporan', $data);
     }
 
     /**
