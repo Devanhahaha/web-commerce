@@ -41,6 +41,7 @@
                                 <th>Nama</th>
                                 <th>Nomor Telp</th>
                                 <th>Nominal</th>
+                                <th>Harga</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Jenis Layanan</th>
                                 <th>Status</th>
@@ -55,6 +56,7 @@
                                         <td>{{ $item->paketdata?->nama }}</td>
                                         <td>{{ $item->paketdata?->no_telp }}</td>
                                         <td>{{ $item->paketdata?->nominal }}</td>
+                                        <td>{{ $item->paketdata?->harga }}</td>
                                         <td>{{ $item->jenis_pembayaran }}</td>
                                         <td>{{ $item->jenis_transaksi }}</td>
                                         <td>{{ $item->status }}</td>

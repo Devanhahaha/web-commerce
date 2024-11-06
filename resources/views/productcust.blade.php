@@ -62,6 +62,7 @@
                                         <button type="button" class="btn btn-warning" onclick="decreaseQuantity({{ $item->id }})">-</button>
                                         <span id="quantity-{{ $item->id }}">{{ $item->quantity ?? 1 }}</span> <!-- Display actual quantity -->
                                         <input type="hidden" name="quantity[{{ $item->id }}]" id="quantity-input-{{ $item->id }}" value="{{ $item->quantity ?? 1 }}">
+                                        <input type="hidden" name="type" value="co">
                                         <button type="button" class="btn btn-success" onclick="increaseQuantity({{ $item->id }}, {{ $item->stok }})">+</button>
                                     </div>                                    
                                 </td>
@@ -78,6 +79,7 @@
                                         <!-- Checkout Button with Quantity Selection -->
                                         <form action="{{ route('productCust.checkout', $item->id) }}" method="POST">
                                             @csrf
+                                            <input type="hidden" id="{{ $item->id.'-qty' }}" name="qty" value="1">
                                             <button type="submit" class="btn btn-warning">Checkout</button>
                                         </form>
                                     </div>
@@ -97,10 +99,14 @@
         let quantitySpan = document.getElementById(`quantity-${productId}`);
         let quantityInput = document.getElementById(`quantity-input-${productId}`);
         let currentQuantity = parseInt(quantitySpan.innerText);
+        let inputQty = document.getElementById(`${productId}-qty`);
 
         if (currentQuantity < maxStock) {
             quantitySpan.innerText = currentQuantity + 1;
             quantityInput.value = currentQuantity + 1;
+            console.log(currentQuantity + 1, `${productId}-qty`);
+            
+            inputQty.value = currentQuantity + 1;
         } else {
             alert('Stok tidak mencukupi!');
         }
@@ -110,10 +116,12 @@
         let quantitySpan = document.getElementById(`quantity-${productId}`);
         let quantityInput = document.getElementById(`quantity-input-${productId}`);
         let currentQuantity = parseInt(quantitySpan.innerText);
+        let inputQty = document.getElementById(`${productId}-qty`);
 
         if (currentQuantity > 1) {
             quantitySpan.innerText = currentQuantity - 1;
             quantityInput.value = currentQuantity - 1;
+            inputQty.value = currentQuantity - 1;
         }
     }
 </script>

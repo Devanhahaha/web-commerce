@@ -41,18 +41,21 @@ class ProductCustController extends Controller
     /**
      * Show the checkout form for the specified product.
      */
-    public function checkout($id)
+    public function checkout(Request $request, $id)
     {
+
         $co = Product::where('id', $id)->get();
 
-    // Menentukan quantity default sebagai 1
-    $quantity = request()->input('quantity', 1);
+        // Menentukan quantity default sebagai 1
+        $quantity = $request->qty;
 
-    // Menghitung total berdasarkan quantity dan nominal produk
-    $total = $co->first()->nominal * $quantity;
-    
-    // Mengirim data `quantity` dan `total` ke view
-    return view('checkout', compact('co', 'quantity', 'total'));
+        // Menghitung total berdasarkan quantity dan nominal produk
+        $total = $co->first()->nominal * $quantity;
+
+        $type = $request->type;
+        
+        // Mengirim data `quantity` dan `total` ke view
+        return view('checkout', compact('co', 'quantity', 'total', 'type'));
     }
 
     /**
@@ -168,6 +171,7 @@ private function kurangiStokProduct($quantity, $jenis)
         
             $nominal = str_replace('.', '', $request->nominal);
             $quantity = (int) $request->quantity;
+        
             $ongkir = (int) str_replace('.', '', $request->ongkir);
 
             $totalNominal = ($nominal * $quantity) + $ongkir;

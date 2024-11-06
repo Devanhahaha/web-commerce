@@ -38,7 +38,7 @@
                     $totalPemasukanBulanan = $transaksiBulanan
                         ->where('jenis_transaksi', 'PULSA')
                         ->sum(function ($item) {
-                            return $item->pulsa?->nominal ?? 0;
+                            return $item->pulsa?->harga ?? 0;
                         });
                     $totalPemasukanPerBulan[$bulan] = $totalPemasukanBulanan;
                     $nomorUrut = 1; // Inisialisasi nomor urut di setiap bulan
@@ -58,6 +58,7 @@
                                     <th>Nama</th>
                                     <th>Nomor Telp</th>
                                     <th>Nominal</th>
+                                    <th>Harga</th>
                                     <th>Jenis Pembayaran</th>
                                     <th>Jenis Layanan</th>
                                     <th>Status</th>
@@ -74,6 +75,7 @@
                                             <td>{{ $item->pulsa?->nama }}</td>
                                             <td>{{ $item->pulsa?->no_telp }}</td>
                                             <td>{{ $item->pulsa?->nominal }}</td>
+                                            <td>{{ $item->pulsa?->harga }}</td>
                                             <td>{{ $item->jenis_pembayaran }}</td>
                                             <td>{{ $item->jenis_transaksi }}</td>
                                             <td>{{ $item->status }}</td>

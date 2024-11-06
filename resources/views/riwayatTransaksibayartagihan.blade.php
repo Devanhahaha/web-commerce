@@ -27,6 +27,7 @@
                                 <th>Nama</th>
                                 <th>Nomor Tagihan</th>
                                 <th>Nominal</th>
+                                <th>Harga</th>
                                 <th>Jenis Layanan</th>
                                 <th>Status</th>
                             </tr>
@@ -38,6 +39,7 @@
                                     <td>{{ $item->bayartagihan?->nama }}</td>
                                     <td>{{ $item->bayartagihan?->no_tagihan }}</td>
                                     <td>{{ $item->bayartagihan?->nominal }}</td>
+                                    <td>{{ $item->bayartagihan?->harga }}</td>
                                     <td>{{ $item->jenis_transaksi }}</td>
                                     <td>{{ $item->status }}</td>
                                 </tr>

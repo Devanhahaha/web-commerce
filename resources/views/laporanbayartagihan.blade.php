@@ -21,7 +21,7 @@
         @foreach($transaksi->groupBy(function($item) { return $item->created_at->format('F Y'); }) as $bulan => $transaksiBulanan)
             @php
                 $totalPemasukanBulanan = $transaksiBulanan->where('jenis_transaksi', 'BAYARTAGIHAN')->sum(function($item) {
-                    return (int) ($item->bayartagihan?->nominal ?? 0);
+                    return (int) ($item->bayartagihan?->harga ?? 0);
                 });
                 $totalPemasukanPerBulan[$bulan] = $totalPemasukanBulanan;
                 $nomorUrut = 1;
@@ -41,6 +41,7 @@
                                 <th>Nama</th>
                                 <th>Nomor Tagihan</th>
                                 <th>Nominal</th>
+                                <th>Harga</th>
                                 <th>Jenis Pembayaran</th>
                                 <th>Jenis Layanan</th>
                                 <th>Status</th>
@@ -55,6 +56,7 @@
                                         <td>{{ $item->bayartagihan?->nama }}</td>
                                         <td>{{ $item->bayartagihan?->no_tagihan }}</td>
                                         <td>{{ $item->bayartagihan?->nominal }}</td>
+                                        <td>{{ $item->bayartagihan?->harga }}</td>
                                         <td>{{ $item->jenis_pembayaran }}</td>
                                         <td>{{ $item->jenis_transaksi }}</td>
                                         <td>{{ $item->status }}</td>

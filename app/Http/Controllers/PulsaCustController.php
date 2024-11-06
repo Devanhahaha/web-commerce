@@ -68,6 +68,7 @@ class PulsaCustController extends Controller
                 'nama' => $request->name,
                 'no_telp' => $request->number,
                 'nominal' => $nominal,
+                'harga' => $request->harga,
                 'tipe_kartu' => $request->jenis,
             ]);
             
@@ -75,7 +76,7 @@ class PulsaCustController extends Controller
             // Membuat Transaksi Midtrans
             $transaction_details = [
                 'order_id' => $transaksi->id,
-                'gross_amount' => $request->nominal, // no decimal allowed for creditcard
+                'gross_amount' => $request->harga, // no decimal allowed for creditcard
             ];
 
             $customer_details = [

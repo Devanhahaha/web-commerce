@@ -34,6 +34,9 @@ Route::post('/notification', [PaymentController::class, 'notification'])->name('
 
 //pulsa
 Route::get('/pulsa', [PulsaController::class, 'index']);
+Route::post('/pulsa', [PulsaController::class, 'store']);
+
+//
 
 //paketdata
 Route::get('/paketdata', [PaketdataController::class, 'index']);

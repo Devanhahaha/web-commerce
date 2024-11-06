@@ -65,6 +65,7 @@ class PulsaController extends Controller
         'nama' => $request->name,
         'no_telp' => $request->number,
         'nominal' => $nominal,
+        'harga' => $request->harga,
         'tipe_kartu' => $request->jenis,
     ]);
     

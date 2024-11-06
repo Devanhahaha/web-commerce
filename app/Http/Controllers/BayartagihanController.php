@@ -59,6 +59,7 @@ class BayartagihanController extends Controller
             'tipe_tagihan' => $request->jenis_tagihan,
             'no_tagihan' => $request->nomor_tagihan,
             'nominal' => $nominal,
+            'harga' => $request->harga,
         ]);
         return redirect()->route('laporanbayartagihan.index');
     }

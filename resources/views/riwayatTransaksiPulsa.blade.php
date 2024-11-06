@@ -27,6 +27,7 @@
                                 <th>Nama</th>
                                 <th>Nomor Telp</th>
                                 <th>Nominal</th>
+                                <th>Harga</th>
                                 <th>Jenis Layanan</th>
                                 <th>Status</th>
                             </tr>
@@ -38,6 +39,7 @@
                                     <td>{{ $item->pulsa?->nama }}</td>
                                     <td>{{ $item->pulsa?->no_telp }}</td>
                                     <td>{{ $item->pulsa?->nominal }}</td>
+                                    <td>{{ $item->pulsa?->harga }}</td>
                                     <td>{{ $item->jenis_transaksi }}</td>
                                     <td>{{ $item->status }}</td>
                                 </tr>

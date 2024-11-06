@@ -20,14 +20,15 @@
             </div>
             <div class="mb-3">
                 <label for="nominal" class="form-label">Nominal</label>
-                <select class="form-select" id="nominal" name="nominal" required>
-                    <option value="12000">Rp 10.000</option>
-                    <option value="22000">Rp 20.000</option>
-                    <option value="27000">Rp 25.000</option>
-                    <option value="52000">Rp 50.000</option>
-                    <option value="102000">Rp 100.000</option>
+                <select class="form-select" id="nominal" name="nominal" required onchange="updateHarga()">
+                    <option value="10000" data-harga="12000">Rp 10.000</option>
+                    <option value="20000" data-harga="22000">Rp 20.000</option>
+                    <option value="25000" data-harga="27000">Rp 25.000</option>
+                    <option value="50000" data-harga="52000">Rp 50.000</option>
+                    <option value="100000" data-harga="102000">Rp 100.000</option>
                 </select>
             </div>
+            <input type="hidden" id="harga" name="harga">            
             <div class="mb-3">
                 <label for="jenis" class="form-label">Tipe Kartu</label>
                 <input type="text" class="form-control" id="jenis" name="jenis" readonly>
@@ -66,6 +67,13 @@
         var stokPulsa = 0; 
         var newStok = stokPulsa - parseInt(nominal);
     });
+
+    function updateHarga() {
+    var nominalSelect = document.getElementById("nominal");
+    var selectedOption = nominalSelect.options[nominalSelect.selectedIndex];
+    var hargaValue = selectedOption.getAttribute("data-harga");
+    document.getElementById("harga").value = hargaValue;
+}
 </script>
 
 @endsection

@@ -23,8 +23,8 @@
                     @csrf
                     @foreach ($co as $item)
                         <input type="hidden" name="product_id[]" value="{{ $item['id'] }}">
-                        <input type="hidden" name="quantity[]" value="{{ $item['quantity'] }}">
-                        <input type="hidden" name="sub_total[]" value="{{ $item['nominal'] * $item['quantity'] }}">
+                        <input type="hidden" name="quantity[]" value="{{ $item['quantity'] ?? $quantity }}">
+                        <input type="hidden" name="sub_total[]" value="{{ $item['nominal'] * ($item['quantity'] ?? $quantity) }}">
                     @endforeach
 
                     <div class="mb-3">
@@ -72,9 +72,9 @@
                             <strong>Jenis Product:</strong> {{ $item['jenis'] }}<br>
                             <strong>Merk:</strong> {{ $item['merk'] }}<br>
                             <strong>Deskripsi:</strong> {{ $item['deskripsi'] }}<br>
-                            <strong>Nominal:</strong> {{ $item['nominal'] }}<br>
-                            <strong>Quantity:</strong> {{ $item['quantity'] }}<br>
-                            <strong>Total:</strong> {{ $item['nominal'] * $item['quantity'] }}<br>
+                            <strong>Nominal:</strong> {{ $item['nominal'] ?? 'haha' }}<br>
+                            <strong>Quantity:</strong> {{ $item['quantity'] ?? $quantity }}<br>
+                            <strong>Total:</strong> {{ $item['nominal'] * ($item['quantity'] ?? $quantity) }}<br>
                         </div>
                     @endforeach
                     <div class="mb-3">

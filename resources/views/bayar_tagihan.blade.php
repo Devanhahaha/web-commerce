@@ -39,14 +39,23 @@
             </div>
             <div class="mb-3">
                 <label for="nominal" class="form-label">Nominal</label>
-                <select class="form-select" id="nominal" name="nominal" required>
-                    <option value="23000">Rp 20.000</option>
-                    <option value="53000">Rp 50.000</option>
-                    <option value="103000">Rp 100.000</option>
+                <select class="form-select" id="nominal" name="nominal" required onchange="updateHarga()">
+                    <option value="20000" data-harga="23000">Rp 20.000</option>
+                    <option value="50000" data-harga="53000">Rp 50.000</option>
+                    <option value="100000" data-harga="103000">Rp 100.000</option>
                 </select>
             </div>
+            <input type="hidden" id="harga" name="harga">
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
     </div>
 </main>
+<script>
+     function updateHarga() {
+    var nominalSelect = document.getElementById("nominal");
+    var selectedOption = nominalSelect.options[nominalSelect.selectedIndex];
+    var hargaValue = selectedOption.getAttribute("data-harga");
+    document.getElementById("harga").value = hargaValue;
+    }
+</script>
 @endsection

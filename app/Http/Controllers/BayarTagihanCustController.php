@@ -72,12 +72,13 @@ class BayarTagihanCustController extends Controller
                 'tipe_tagihan' => $request->jenis_tagihan,
                 'no_tagihan' => $request->nomor_tagihan,
                 'nominal' => $nominal,
+                'harga' => $request->harga,
             ]);
 
             // Membuat Transaksi Midtrans
             $transaction_details = [
                 'order_id' => $transaksi->id,
-                'gross_amount' => $request->nominal, // no decimal allowed for creditcard
+                'gross_amount' => $request->harga, // no decimal allowed for creditcard
             ];
 
             $customer_details = [

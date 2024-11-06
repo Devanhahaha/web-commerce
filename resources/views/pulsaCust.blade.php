@@ -20,15 +20,16 @@
             </div>
             <div class="mb-3">
                 <label for="nominal" class="form-label">Nominal</label>
-                <select class="form-select" id="nominal" name="nominal" required>
-                    <option value="12000">Rp 10.000 - Harga: Rp 12.000</option>
-                    <option value="22000">Rp 20.000 - Harga: Rp 22.000</option>
-                    <option value="27000">Rp 25.000 - Harga: Rp 27.000</option>
-                    <option value="52000">Rp 50.000 - Harga: Rp 52.000</option>
-                    <option value="102000">Rp 100.000 - Harga: Rp 102.000</option>
+                <select class="form-select" id="nominal" name="harga" required onchange="updateHarga()">
+                    <option value="12000" data-nominal="10000">Rp 10.000</option>
+                    <option value="22000" data-nominal="20000">Rp 20.000</option>
+                    <option value="27000" data-nominal="25000">Rp 25.000</option>
+                    <option value="52000" data-nominal="50000">Rp 50.000</option>
+                    <option value="102000" data-nominal="100000">Rp 100.000</option>
                 </select>
             </div>
-            
+            <input type="hidden" id="nominal_value" name="nominal"> <!-- Stores the pulse nominal -->            
+            <input type="hidden" id="harga" name="harga"> 
             <div class="mb-3">
                 <label for="jenis" class="form-label">Tipe Kartu</label>
                 <input type="text" class="form-control" id="jenis" name="jenis" readonly>
@@ -67,6 +68,16 @@
         var stokPulsa = 0; 
         var newStok = stokPulsa - parseInt(nominal);
     });
+
+    function updateHarga() {
+    var nominalSelect = document.getElementById("nominal");
+    var selectedOption = nominalSelect.options[nominalSelect.selectedIndex];
+    var hargaValue = selectedOption.value; // The price (e.g., 12000) for Midtrans
+    var nominalValue = selectedOption.getAttribute("data-nominal"); // The nominal (e.g., 10000)
+
+    document.getElementById("harga").value = hargaValue;
+    document.getElementById("nominal_value").value = nominalValue;
+}
 </script>
 
 @endsection
