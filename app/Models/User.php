@@ -8,9 +8,23 @@ use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Authenticatable
+class User extends Authenticatable implements JWTSubject
 {
+    use HasApiTokens, HasFactory, Notifiable, HasRoles;
+
+
+     // Tambahkan method ini
+     public function getJWTIdentifier()
+     {
+         return $this->getKey();
+     }
+ 
+     public function getJWTCustomClaims()
+     {
+         return [];
+     }
 
     use Notifiable;
 
@@ -28,8 +42,6 @@ class User extends Authenticatable
         return $this->role === 'admin';
     }
     
-    use HasApiTokens, HasFactory, Notifiable, HasRoles;
-
     /**
      * The attributes that are mass assignable.
      *

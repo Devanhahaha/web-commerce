@@ -36,7 +36,7 @@ class PulsaController extends Controller
             $code = strtoupper($prefix . substr($uniquePart, -6));
 
             $transaksi = Transaksi::create([
-                'user_id' => 1,
+                'user_id' => auth()->guard('api')->user()->id,
                 'order_id' => $code,
                 'status' => 'lunas',
                 'jenis_transaksi' => $jenis,
