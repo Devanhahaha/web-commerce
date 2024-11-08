@@ -35,27 +35,26 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#product">Product</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#payment">Payment</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#maps">Maps</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
-                    <li class="nav-item">
-                        <a class="btn btn-primary nav-link" href="{{ route('login') }}">Sign In</a>
-                    </li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanhome.index') }}">Home</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanservices.index') }}">Services</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanproduct.index') }}">Product</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanpayment.index') }}">Payment</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanmaps.index') }}">Maps</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamancontact.index') }}">Contact</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('login') }}">Sign In</a></li>
                 </ul>
             </div>
         </div>
     </nav>
     <!-- Masthead-->
-    <header class="masthead">
+    <header class="masthead" id="home">
         <div class="container">
             <div class="masthead-heading text-uppercase">Welcome To DEVAN CELL </div>
             <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
         </div>
     </header>
     <!-- Services-->
-    <section class="page-section" id="services">
+    {{-- <section class="page-section" id="services">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Services</h2>
@@ -109,9 +108,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!-- Portfolio Grid-->
-    <section class="page-section bg-light" id="product">
+    {{-- <section class="page-section bg-light" id="product">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Product</h2>
@@ -211,9 +210,9 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!--payment-->
-    <section class="page-section" id="payment">
+    {{-- <section class="page-section" id="payment">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Payment</h2>
@@ -225,9 +224,9 @@
                     <img class="img-fluid payment-img" src="assets/img/payment/alfamart.jpeg" alt=" " />
                     <img class="img-fluid payment-img" src="assets/img/payment/indomaret.jpeg" alt=" ">
                 </div>
-    </section>
+    </section> --}}
     <!--Maps-->
-    <section class="page-section bg-light" id="maps">
+    {{-- <section class="page-section bg-light" id="maps">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Maps</h2>
@@ -237,7 +236,7 @@
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2823222185093!2d108.1775344735584!3d-6.485887263409887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec900744dcb7f%3A0xca7a6436039e7dd9!2sDevan%20Cell!5e0!3m2!1sid!2sid!4v1709803859898!5m2!1sid!2sid"
                 width="1100" height="450" style="border:0;" allowfullscreen="" loading="lazy"
                 referrerpolicy="no-referrer-when-downgrade"></iframe>
-    </section>
+    </section> --}}
     <!-- Clients-->
     {{-- <div class="py-5">
             <div class="container">
@@ -306,7 +305,7 @@
     document.getElementById('admin-messages').appendChild(adminMessage);
 });
     </script>
-    <section class="page-section" id="contact" style="background-color: #343a40; color: white;">
+    {{-- <section class="page-section" id="contact" style="background-color: #343a40; color: white;">
         <div class="container">
             <div class="text-center">
                 <h2 class="section-heading text-uppercase">Hubungi Kami</h2>
@@ -323,14 +322,14 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 
 
     <!-- Footer-->
     <footer class="footer py-4">
         <div class="container">
             <div class="row align-items-center">
-                <div class="col-lg-4 text-lg-start">Copyright &copy; Your Website 2023</div>
+                <div class="col-lg-4 text-lg-start">Copyright &copy; Devcom Project 3 2024</div>
                 <div class="col-lg-4 my-3 my-lg-0">
                     <a class="btn btn-dark btn-social mx-2" href="#!" aria-label="Twitter"><i
                             class="fab fa-twitter"></i></a>

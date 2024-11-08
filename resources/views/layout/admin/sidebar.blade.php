@@ -3,42 +3,45 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading">Core</div>
-                <a class="nav-link" href="{{ route('dashboard') }}">
+                <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
-                    <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-table-columns" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="table-columns" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 64V416H224V160H64zm384 0H288V416H448V160z"></path></svg><!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com --></div>
+                <a class="nav-link collapsed {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
+                    <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Laporan
-                    <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M169.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 274.7 54.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseLaporan" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                <div class="collapse {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'show' : '' }}" id="collapseLaporan">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('laporanpulsa.index') }}">Laporan Pulsa</a>
-                        <a class="nav-link" href="{{ route('laporanpaketdata.index') }}">Laporan Paket Data</a>
-                        <a class="nav-link" href="{{ route('laporanbayartagihan.index') }}">Laporan Bayar Tagihan</a>
-                        <a class="nav-link" href="{{ route('laporanservices.index') }}">Laporan Service</a>
-                        <a class="nav-link" href="{{ route('laporanpemesananproduct.index') }}">Laporan Pemesanan Product</a>
+                        <a class="nav-link {{ request()->routeIs('laporanpulsa.index') ? 'active' : '' }}" href="{{ route('laporanpulsa.index') }}">Laporan Pulsa</a>
+                        <a class="nav-link {{ request()->routeIs('laporanpaketdata.index') ? 'active' : '' }}" href="{{ route('laporanpaketdata.index') }}">Laporan Paket Data</a>
+                        <a class="nav-link {{ request()->routeIs('laporanbayartagihan.index') ? 'active' : '' }}" href="{{ route('laporanbayartagihan.index') }}">Laporan Bayar Tagihan</a>
+                        <a class="nav-link {{ request()->routeIs('laporanservices.index') ? 'active' : '' }}" href="{{ route('laporanservices.index') }}">Laporan Service</a>
+                        <a class="nav-link {{ request()->routeIs('laporanpemesananproduct.index') ? 'active' : '' }}" href="{{ route('laporanpemesananproduct.index') }}">Laporan Pemesanan Product</a>
                     </nav>
                 </div>
-                <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayanan" aria-expanded="false" aria-controls="collapseLayanan">
-                    <div class="sb-nav-link-icon"><svg class="svg-inline--fa fa-table-columns" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="table-columns" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" data-fa-i2svg=""><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 64V416H224V160H64zm384 0H288V416H448V160z"></path></svg><!-- <i class="fas fa-columns"></i> Font Awesome fontawesome.com --></div>
+                <a class="nav-link collapsed {{ request()->routeIs('pulsa.index', 'paket_data.index', 'bayar_tagihan.index', 'services.index') ? 'active' : '' }}" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayanan" aria-expanded="false" aria-controls="collapseLayanan">
+                    <div class="sb-nav-link-icon">
+                        <i class="fas fa-columns"></i>
+                    </div>
                     Layanan
-                    <div class="sb-sidenav-collapse-arrow"><svg class="svg-inline--fa fa-angle-down" aria-hidden="true" focusable="false" data-prefix="fas" data-icon="angle-down" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" data-fa-i2svg=""><path fill="currentColor" d="M169.4 342.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L192 274.7 54.6 137.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z"></path></svg><!-- <i class="fas fa-angle-down"></i> Font Awesome fontawesome.com --></div>
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
                 </a>
-                <div class="collapse" id="collapseLayanan" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                <div class="collapse {{ request()->routeIs('pulsa.index', 'paket_data.index', 'bayar_tagihan.index', 'services.index') ? 'show' : '' }}" id="collapseLayanan" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
                     <nav class="sb-sidenav-menu-nested nav">
-                        <a class="nav-link" href="{{ route('pulsa.index') }}">Pulsa</a>
-                        <a class="nav-link" href="{{ route('paket_data.index') }}">Paket Data</a>
-                        <a class="nav-link" href="{{ route('bayar_tagihan.index') }}">Bayar Tagihan</a>
-                        <a class="nav-link" href="{{ route('services.index') }}">Service</a>
+                        <a class="nav-link {{ request()->routeIs('pulsa.index') ? 'active' : '' }}" href="{{ route('pulsa.index') }}">Pulsa</a>
+                        <a class="nav-link {{ request()->routeIs('paket_data.index') ? 'active' : '' }}" href="{{ route('paket_data.index') }}">Paket Data</a>
+                        <a class="nav-link {{ request()->routeIs('bayar_tagihan.index') ? 'active' : '' }}" href="{{ route('bayar_tagihan.index') }}">Bayar Tagihan</a>
+                        <a class="nav-link {{ request()->routeIs('services.index') ? 'active' : '' }}" href="{{ route('services.index') }}">Service</a>
                     </nav>
                 </div>
                 
-                <a class="nav-link" href="{{ route('product.index') }}">
+                <a class="nav-link {{ request()->routeIs('product.index') ? 'active' : '' }}" href="{{ route('product.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Product
                 </a>
+                
             </div>
         </div>
         <div class="sb-sidenav-footer">

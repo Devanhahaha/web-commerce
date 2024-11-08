@@ -15,12 +15,18 @@ use App\Http\Controllers\ServicesController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\PaketdataController;
 use App\Http\Controllers\PulsaCustController;
+use App\Http\Controllers\HalamanHomeController;
+use App\Http\Controllers\HalamanMapsController;
 use App\Http\Controllers\ProductCustController;
 use App\Http\Controllers\ServiceCustController;
 use App\Http\Controllers\BayartagihanController;
 use App\Http\Controllers\LaporanPulsaController;
 use App\Http\Controllers\DashboardCustController;
 use App\Http\Controllers\PaketdataCustController;
+use App\Http\Controllers\HalamanContactController;
+use App\Http\Controllers\HalamanPaymentController;
+use App\Http\Controllers\HalamanProductController;
+use App\Http\Controllers\HalamanServicesController;
 use App\Http\Controllers\LaporanServicesController;
 use App\Http\Controllers\BayarTagihanCustController;
 use App\Http\Controllers\LaporanPaketDataController;
@@ -117,6 +123,13 @@ Route::post('/cart/update/{id}', [CartController::class, 'update'])->name('cart.
 Route::post('/checkout/cart', [ProductCustController::class, 'checkoutCart'])->name('productCust.checkoutCart');
 Route::post('/checkout/selected', [ProductCustController::class, 'checkoutSelected'])->name('productCust.checkoutSelected');
 
+//landingpage
+Route::get('/halamanservices', [HalamanServicesController::class, 'index'])->name('halamanservices.index');
+Route::get('/halamanproduct', [HalamanProductController::class, 'index'])->name('halamanproduct.index');
+Route::get('/halamanpayment', [HalamanPaymentController::class, 'index'])->name('halamanpayment.index');
+Route::get('/halamanmaps', [HalamanMapsController::class, 'index'])->name('halamanmaps.index');
+Route::get('/halamancontact', [HalamanContactController::class, 'index'])->name('halamancontact.index');
+Route::get('/home', [HalamanHomeController::class, 'index'])->name('halamanhome.index');
 
 #customer
 Route::group(['middleware' => ['role:customer']], function () {

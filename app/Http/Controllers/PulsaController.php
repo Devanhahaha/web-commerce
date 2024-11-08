@@ -42,6 +42,7 @@ class PulsaController extends Controller
         'name' => 'required|alpha',
         'number' => 'required|numeric',
         'nominal' => 'required|numeric',
+        'harga' => 'required|integer',
         'jenis' => 'required|alpha'
     ]);
     
