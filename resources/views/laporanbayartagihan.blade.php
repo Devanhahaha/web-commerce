@@ -39,7 +39,7 @@
             <div class="card mb-4 report-card" data-month="{{ $bulan }}" style="display: none;">
                 <div class="card-header">
                     <i class="fas fa-table me-1"></i>
-                    Laporan & Total Pendapatan Bulan {{ $bulan }}: Rp{{ number_format($totalPemasukanBulanan, 0, ',', '.') }}
+                    <strong>Laporan & Total Pendapatan Bulan {{ $bulan }}: Rp{{ number_format($totalPemasukanBulanan, 0, ',', '.') }}</strong>
                 </div>
                 <div class="card-body">
                     <table id="datatablesSimple" class="table table-bordered">

@@ -50,7 +50,7 @@
     <header class="masthead" id="home">
         <div class="container">
             <div class="masthead-heading text-uppercase">Welcome To DEVAN CELL </div>
-            <a class="btn btn-primary btn-xl text-uppercase" href="#services">Tell Me More</a>
+            <a class="btn btn-primary btn-xl text-uppercase" href="{{ route('halamanservices.index') }}">Tell Me More</a>
         </div>
     </header>
     <!-- Services-->

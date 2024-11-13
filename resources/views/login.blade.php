@@ -8,9 +8,17 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>Login - SB Admin</title>
-        <link rel="icon" type="image/x-icon" href="assets/logo-tab.png" />
+        <link rel="icon" type="image/x-icon" href="assets/logo-tab.png"/>
         <link href="css/styles.css" rel="stylesheet" />
         <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
+        <style>
+            body{
+                background-image: url('{{ asset('assets/img/bg1.png') }}');
+                background-size: cover;
+                background-position: center;
+                background-repeat: no-repeat;
+            }
+        </style>
     </head>
     <body class="bg-">
         <div id="layoutAuthentication">

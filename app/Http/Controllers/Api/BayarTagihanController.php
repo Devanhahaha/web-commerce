@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
+use App\Models\Transaksi;
 use App\Models\Bayartagihan;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class BayarTagihanController extends Controller
 {
@@ -35,8 +36,45 @@ class BayarTagihanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+
+            $jenis = 'BAYARTAGIHAN';
+            $prefix = "TRX-$jenis-";
+            $uniquePart = uniqid();
+            $code = strtoupper($prefix . substr($uniquePart, -6));
+
+            $transaksi = Transaksi::create([
+                'user_id' => auth()->guard('api')->user()->id,
+                'order_id' => $code,
+                'status' => 'lunas',
+                'jenis_transaksi' => $jenis,
+                'jenis_pembayaran' => 'cash'
+            ]);
+
+            $nominal = str_replace('.', '', $request->nominal);
+
+            $bayartagihan = Bayartagihan::create([
+                'transaksi_id' => $transaksi->id,
+                'nama' => $request->nama,
+                'tipe_tagihan' => $request->tipe_tagihan,
+                'no_tagihan' => $request->no_tagihan,
+                'nominal' => $nominal,
+                'harga' => $request->harga,
+            ]);
+
+            return response()->json([
+                "status" => true,
+                "message" => "success submitting data",
+                "data" => $bayartagihan,
+            ], 200);
+        }catch (\Throwable $th) {
+            return response()->json([
+                "status" => 500,
+                "message" => "Error submitting data",
+                "error" => $th->getMessage()
+            ], 500);
     }
+}
 
     /**
      * Display the specified resource.

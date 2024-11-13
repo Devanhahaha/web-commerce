@@ -57,10 +57,11 @@
                 <div class="card mb-4 report-card" data-month="{{ $bulan }}">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
-                        Laporan & Total Pendapatan Bulan {{ $bulan }}:
+                        <strong>Laporan & Total Pendapatan Bulan {{ $bulan }}:
                         <span class="total-pemasukan-bulanan">
                             Rp{{ number_format($totalPemasukanBulanan, 0, ',', '.') }}
                         </span>
+                        </strong>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">

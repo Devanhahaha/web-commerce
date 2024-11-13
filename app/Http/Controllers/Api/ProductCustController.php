@@ -13,7 +13,7 @@ class ProductCustController extends Controller
      */
     public function index()
     {
-        $productcust = ProductCust::get();
+        $productcust = ProductCust::with('product')->get();
         return response()->json([
             'status' => true,
             'message' => 'success',

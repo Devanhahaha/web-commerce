@@ -39,8 +39,8 @@ Route::middleware(['jwt.auth'])->group(function () {
     // Tambahkan rute yang membutuhkan autentikasi JWT di sini
 
     Route::get('/product', [ProductController::class, 'index']);
-    Route::post('/store', [ProductController::class, 'store']);
-    Route::put('/update/{id}', [ProductController::class, 'update']);
+    Route::post('/product', [ProductController::class, 'store']);
+    Route::put('/product/{id}', [ProductController::class, 'update']);
     Route::delete('/product/{id}', [ProductController::class, 'destroy']);
     Route::post('/notification', [PaymentController::class, 'notification'])->name('notification');
 
@@ -54,9 +54,11 @@ Route::middleware(['jwt.auth'])->group(function () {
 
     //bayartagihan
     Route::get('/bayartagihan', [BayarTagihanController::class, 'index']);
+    Route::post('/bayartagihan', [BayarTagihanController::class, 'store']);
 
     //services
     Route::get('/services', [ServicesController::class, 'index']);
+    Route::post('/services', [ServicesController::class, 'store']);
 
     //productcust
     Route::get('/productcust', [ProductCustController::class, 'index']);

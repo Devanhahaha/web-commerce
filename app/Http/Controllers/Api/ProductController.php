@@ -33,22 +33,23 @@ class ProductController extends Controller
         try {
             $file = $request->file('gambar');
             $path = 'files/product/';
-            // $nameFile = $file->getClientOriginalName();
+            $nameFile = $file->getClientOriginalName();
 
             $nominal = str_replace('.', '', $request->nominal);
 
             $product = Product::create([
-                'nama_product' => $request->name,
+                'nama_product' => $request->nama_product,
                 'jenis' => $request->jenis,
                 'merk' => $request->merk,
                 'deskripsi' => $request->deskripsi,
+                'stok' => $request->stok,
                 'nominal' => $nominal,
-                // 'gambar' => $path.$nameFile
+                'gambar' => $path.$nameFile
             ]);
 
             if (!File::isDirectory($path)) File::makeDirectory($path, 0755, true, true);
 
-            // $file->move($path, $nameFile);
+            $file->move($path, $nameFile);
 
             return response()->json([
                 "status" => 200,
@@ -69,10 +70,11 @@ class ProductController extends Controller
         try {
             $product = Product::find($id);
 
-            $product->nama_product = $request->name;
+            $product->nama_product = $request->nama_product;
             $product->jenis = $request->jenis;
             $product->merk = $request->merk;
             $product->deskripsi = $request->deskripsi;
+            $product->stok = $request->stok;
             $product->nominal = str_replace('.', '', $request->nominal);
 
             if ($request->hasFile('gambar')) {
