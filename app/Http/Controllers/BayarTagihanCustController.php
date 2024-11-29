@@ -59,7 +59,7 @@ class BayarTagihanCustController extends Controller
             $transaksi = Transaksi::create([
                 'user_id' => Auth::user()->id,
                 'order_id' => $code,
-                'status' => 'belum lunas',
+                'status' => 'lunas',
                 'jenis_transaksi' => $jenis,
                 'jenis_pembayaran' => 'online'
             ]);
