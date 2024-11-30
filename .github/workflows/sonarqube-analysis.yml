@@ -3,10 +3,10 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - devan-baru  # atau sesuaikan dengan branch yang Anda gunakan
+      - main  # atau sesuaikan dengan branch yang Anda gunakan
   pull_request:
     branches:
-      - devan-baru  # jika Anda ingin workflow berjalan saat ada pull request ke branch utama
+      - main  # jika Anda ingin workflow berjalan saat ada pull request ke branch utama
 
 jobs:
   build:
@@ -25,8 +25,10 @@ jobs:
         run: |
           Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
           Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
-          $env:PATH += ";$(pwd)\sonar-scanner\bin"
-          # Verifikasi apakah sonar-scanner sudah ada di PATH
+          $env:PATH += ";$(pwd)\sonar-scanner\bin"  # Menambahkan direktori ke PATH
+          
+          # Verifikasi isi direktori bin dan PATH
+          dir "$(pwd)\sonar-scanner\bin"
           echo $env:PATH
 
       # Run SonarQube Scanner
@@ -35,6 +37,6 @@ jobs:
           SONAR_HOST_URL: 'http://localhost:9000'  # URL server SonarQube
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}  # Token API SonarQube
         run: |
-          # Verifikasi jika sonar-scanner ada dalam PATH
-          sonar-scanner --version
-          sonar-scanner
+          # Cek path lengkap ke sonar-scanner dan jalankan
+          & "$(pwd)\sonar-scanner\bin\sonar-scanner.bat" --version
+          & "$(pwd)\sonar-scanner\bin\sonar-scanner.bat"
