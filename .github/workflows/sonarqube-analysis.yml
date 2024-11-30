@@ -3,10 +3,10 @@ name: SonarQube Analysis
 on:
   push:
     branches:
-      - main  # atau sesuaikan dengan branch yang Anda gunakan
+      - devan-baru  # atau sesuaikan dengan branch yang Anda gunakan
   pull_request:
     branches:
-      - main  # jika Anda ingin workflow berjalan saat ada pull request ke branch utama
+      - devan-baru  # jika Anda ingin workflow berjalan saat ada pull request ke branch utama
 
 jobs:
   build:
