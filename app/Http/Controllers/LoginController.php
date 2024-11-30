@@ -10,102 +10,63 @@ use Illuminate\Http\Client\Request as ClientRequest;
 
 class LoginController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    public function checkAuth(Request $request){
-        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
-            if(Auth::user()->getRoleNames()->first() == 'admin'){
-                return redirect()->route('dashboard');
-            }else{
-                return redirect()->route('dashboardcust');
-            }
-        }else{
-            return redirect()->back()->with('error', 'Email atau Password anda salah!');
+    public function checkAuth(Request $request)
+{
+    if (Auth::attempt(['email' => $request->email, 'password' => $request->password])) {
+        if (Auth::user()->hasRole('admin')) {
+            return redirect()->route('dashboard');
         }
+        return redirect()->route('dashboardcust');
     }
+    return redirect()->back()->with('error', 'Email atau Password anda salah!');
+}
+
 
     public function logout(){
         Auth::logout();
         return redirect()->route('login');
     }
 
-    public function sendEmail(Request $request){
-        $user = User::where('email', $request->email)->first();
-        if($user == null)
+        public function sendEmail(Request $request)
+    {
+        $user = $this->getUserByEmail($request->email);
+
+        if (!$user) {
             return redirect()->back()->with('error', 'Email tidak terdaftar di database kami');
-        
-        $to_name = $user->first_name.' '.$user->last_name;
-        $to_email = $user->email;
-        $data = [
-            'nama' => $to_name
-        ];
-        
-        Mail::send('email.forgot-password', $data, function($message) use ($to_name, $to_email) {
-            $message->to($to_email, $to_name)
-                    ->subject('Lupa password kan?');
-            $message->from(env('MAIL_FROM_ADDRESS'), "Pemberitahuan Lupa Password");
-        });
+        }
+
+        $this->sendPasswordResetEmail($user);
+
         return redirect()->route('login')->with('success', 'Password berhasil diganti');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    private function getUserByEmail($email)
     {
-        //
+        return User::where('email', $email)->first();
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    private function sendPasswordResetEmail($user)
+    {
+        $to_name = $user->first_name . ' ' . $user->last_name;
+        $to_email = $user->email;
+        $data = ['nama' => $to_name];
+
+        Mail::send('email.forgot-password', $data, function ($message) use ($to_name, $to_email) {
+            $message->to($to_email, $to_name)
+                    ->subject(config('mail.subjects.forgot_password', 'Lupa password kan?'));
+            $message->from(config('mail.from.address', env('MAIL_FROM_ADDRESS')), config('mail.from.name', 'Pemberitahuan Lupa Password'));
+        });
+    }
     public function store(Request $request)
     {
         User::create([
             'first_name' => $request->first_name,
             'last_name' => $request->last_name,
             'email' => $request->email,
-            'password' => $request->password
+            'password' => bcrypt($request->password)
         ])->assignRole('customer');
 
         return redirect()->route('login')->with('success', 'Akun berhasil dibuat');
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

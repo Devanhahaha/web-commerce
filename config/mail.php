@@ -15,6 +15,9 @@ return [
 
     'default' => env('MAIL_MAILER', 'smtp'),
 
+    'subjects' => [
+        'forgot_password' => 'Lupa password kan?',
+    ],
     /*
     |--------------------------------------------------------------------------
     | Mailer Configurations

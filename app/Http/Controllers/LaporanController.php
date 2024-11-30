@@ -1,7 +1,5 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
 
@@ -12,55 +10,12 @@ class LaporanController extends Controller
      */
     public function index()
     {
-        $data['transaksi'] = Transaksi::with(['pulsa', 'paketdata', 'bayartagihan', 'services', 'product'])->latest()->get();
+        // Menggunakan pagination untuk membatasi jumlah data yang dimuat
+        $data['transaksi'] = Transaksi::with(['pulsa', 'paketdata', 'bayartagihan', 'services', 'product'])
+                                       ->latest()
+                                       ->paginate(10); // Limit data per halaman
         return view('laporan', $data);
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }
+
+// Baris kosong di akhir file
