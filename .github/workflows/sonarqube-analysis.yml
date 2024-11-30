@@ -3,36 +3,28 @@ name: SonarQube Code Analysis
 on:
   push:
     branches:
-      - devan-baru
+      - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   sonarqube:
     runs-on: ubuntu-latest
-
     steps:
-    # 1. Checkout repository
-    - name: Checkout code
-      uses: actions/checkout@v3
+      # 1. Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-    # 2. Setup Java (SonarQube membutuhkan Java untuk scanner)
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'adopt'
+      # 2. Setup environment variables
+      env:
+        SONAR_HOST_URL: 'http://localhost:9000' # Ganti sesuai URL server SonarQube
+        SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Pastikan secret token tersedia
 
-    # 3. Install SonarQube Scanner
-    - name: Install SonarQube Scanner
-      run: |
-        curl -sL https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip -o sonar-scanner.zip
-        unzip sonar-scanner.zip -d $HOME
-        echo "$HOME/sonar-scanner-4.8.0.2856-linux/bin" >> $GITHUB_PATH
-
-    # 4. Run SonarQube analysis
-    - name: Run SonarQube Scanner
-      run: |
-        sonar-scanner \
-          -Dsonar.projectKey=web-commerce \
-          -Dsonar.host.url=http://localhost:9000 \
-          -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+      # 3. Run SonarQube Scanner
+      - name: Run SonarQube Scanner
+        run: |
+          wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip
+          unzip sonar-scanner-cli-4.8.0.2856-linux.zip
+          export PATH=$PATH:`pwd`/sonar-scanner-4.8.0.2856-linux/bin
+          sonar-scanner
