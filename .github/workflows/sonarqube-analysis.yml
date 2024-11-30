@@ -22,14 +22,17 @@ jobs:
 
       # Install dependencies and download SonarQube Scanner
       - name: Install dependencies and run SonarQube Scanner
-        run: |
-          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
-          Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
-          $env:PATH += ";$(pwd)\sonar-scanner\bin"  # Menambahkan direktori ke PATH
-          
-          # Verifikasi isi direktori bin dan PATH
-          dir "$(pwd)\sonar-scanner\bin"
-          echo $env:PATH
+  run: |
+    # Unduh dan ekstrak sonar-scanner
+    Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
+    Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
+
+    # Periksa isi folder sonar-scanner
+    Get-ChildItem -Path "$(pwd)\sonar-scanner"
+
+    # Tambahkan ke PATH
+    $env:PATH += ";$(pwd)\sonar-scanner\bin"
+
 
       # Run SonarQube Scanner
       - name: Run SonarQube Scanner
