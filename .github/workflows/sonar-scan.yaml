@@ -4,36 +4,20 @@ on:
   push:
     branches:
       - devan-baru
-  workflow_dispatch:
 
 jobs:
-  sonarQubeScan:
-    runs-on: windows-latest  # Menggunakan runner Windows
+  sonar-scan:
+    runs-on: windows-latest
 
     steps:
-      # 1. Checkout kode dari repository
+      # Checkout kode Anda
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # 2. Download dan ekstrak SonarQube Scanner untuk Windows
-      - name: Install SonarQube Scanner
-        run: |
-          Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
-          Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
-          dir "sonar-scanner"
-
-      # 3. Tambahkan folder scanner ke PATH
-      - name: Update PATH
-        run: echo "$(Resolve-Path sonar-scanner\bin)" >> $env:PATH
-
-      # 4. Jalankan SonarQube Scanner
+      # Jalankan SonarQube Scanner
       - name: Run SonarQube Scanner
         env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}  # Token untuk autentikasi
-          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}  # URL server SonarQube
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }} # URL SonarQube Server
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }} # Token dari SonarQube
         run: |
-          sonar-scanner\bin\sonar-scanner.bat ^
-            -Dsonar.projectKey=web-commerce ^
-            -Dsonar.sources=. ^
-            -Dsonar.host.url=%SONAR_HOST_URL% ^
-            -Dsonar.login=%SONAR_TOKEN%
+          sonar-scanner
