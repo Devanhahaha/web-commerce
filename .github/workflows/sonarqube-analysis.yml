@@ -1,3 +1,13 @@
+name: SonarQube Analysis
+
+on:
+  push:
+    branches:
+      - devan-baru  # atau sesuaikan dengan branch yang Anda gunakan
+  pull_request:
+    branches:
+      - devan-baru  # jika Anda ingin workflow berjalan saat ada pull request ke branch utama
+
 jobs:
   build:
     runs-on: windows-latest  # Menggunakan runner Windows
