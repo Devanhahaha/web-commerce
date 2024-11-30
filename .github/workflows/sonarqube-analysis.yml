@@ -26,10 +26,15 @@ jobs:
           Invoke-WebRequest -Uri "https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-windows.zip" -OutFile "sonar-scanner.zip"
           Expand-Archive -Path "sonar-scanner.zip" -DestinationPath "sonar-scanner"
           $env:PATH += ";$(pwd)\sonar-scanner\bin"
+          # Verifikasi apakah sonar-scanner sudah ada di PATH
+          echo $env:PATH
 
       # Run SonarQube Scanner
       - name: Run SonarQube Scanner
         env:
           SONAR_HOST_URL: 'http://localhost:9000'  # URL server SonarQube
           SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}  # Token API SonarQube
-        run: sonar-scanner
+        run: |
+          # Verifikasi jika sonar-scanner ada dalam PATH
+          sonar-scanner --version
+          sonar-scanner
