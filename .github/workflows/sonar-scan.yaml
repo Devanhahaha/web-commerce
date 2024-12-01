@@ -14,15 +14,26 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
+      # Debug PATH untuk memastikan jalur tersedia
+      - name: Debug PATH
+        run: echo $env:PATH
+
       # Tambahkan Sonar Scanner ke PATH
       - name: Add Sonar Scanner to PATH
         run: |
           $env:PATH += ";C:\sonar-scanner-6.2.1.4610-windows-x64\bin"
-          echo $env:PATH
+          echo "PATH: $env:PATH"
+
+      # Pastikan sonar-scanner dapat ditemukan
+      - name: Check Sonar Scanner executable
+        run: |
+          dir C:\sonar-scanner-6.2.1.4610-windows-x64\bin
+          sonar-scanner.bat --version
 
       # Jalankan Sonar Scanner
       - name: Run SonarQube Scanner
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: C:\sonar-scanner-6.2.1.4610-windows-x64\bin\sonar-scanner.bat
+        run: |
+          sonar-scanner.bat
