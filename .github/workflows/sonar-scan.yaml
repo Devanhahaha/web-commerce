@@ -24,12 +24,17 @@ jobs:
           
           # Ekstrak file sonar-scanner.zip ke folder tools/
           Expand-Archive -Path tools/sonar-scanner.zip -DestinationPath tools/ -Force
-          
-      # Menambahkan folder sonar-scanner ke dalam path
-      - name: Set SONAR_SCANNER_HOME
+
+      # Set path ke folder sonar-scanner
+      - name: Set SONAR_SCANNER_HOME and update PATH
         run: |
+          # Tentukan folder tempat sonar-scanner berada
           $env:SONAR_SCANNER_HOME="C:\${{ github.workspace }}\tools\sonar-scanner-cli-6.2.1.4610-windows-x64"
+          
+          # Update PATH environment variable untuk mengakses sonar-scanner.bat
           $env:PATH="$env:SONAR_SCANNER_HOME\bin;$env:PATH"
+          
+          # Tampilkan variabel environment untuk debug (optional)
           echo "SONAR_SCANNER_HOME=$env:SONAR_SCANNER_HOME" >> $GITHUB_ENV
           echo "PATH=$env:PATH" >> $GITHUB_ENV
 
