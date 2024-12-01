@@ -7,16 +7,32 @@ on:
 
 jobs:
   sonar-scan:
-    runs-on: ubuntu-latest # atau windows-latest jika ingin lingkungan Windows
+    runs-on: windows-latest
 
     steps:
       # Checkout kode Anda
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Jalankan SonarQube Scanner
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v1.0.3
+      # Ekstrak SonarScanner dari ZIP
+      - name: Setup SonarScanner
+        run: |
+          # Ekstrak file ZIP sonar-scanner.zip
+          Expand-Archive -Path ./tools/sonar-scanner.zip -DestinationPath .
+          # Ubah nama folder hasil ekstraksi
+          Rename-Item -Path ./sonar-scanner-6.2.1.4610-windows-x64 -NewName sonar-scanner
+          # Menambahkan path ke sonar-scanner ke PATH
+          $env:PATH += ";$(Resolve-Path ./sonar-scanner/bin)"
+          # Verifikasi versi sonar-scanner
+          sonar-scanner.bat --version
+
+      # Jalankan SonarQube Scan
+      - name: Run SonarQube Scan
+        run: |
+          sonar-scanner.bat ^
+          -Dsonar.projectKey=devan-cell-web ^
+          -Dsonar.sources=. ^
+          -Dsonar.language=php
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
