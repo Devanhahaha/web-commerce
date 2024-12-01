@@ -7,33 +7,16 @@ on:
 
 jobs:
   sonar-scan:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest # atau windows-latest jika ingin lingkungan Windows
 
     steps:
       # Checkout kode Anda
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Tambahkan SonarScanner CLI ke Cache
-      - name: Cache SonarScanner CLI
-        uses: actions/cache@v3
-        with:
-          path: C:\sonar-scanner-6.2.1.4610-windows-x64
-          key: sonar-scanner-6.2.1
-
-      # Tambahkan SonarScanner CLI ke PATH
-      - name: Add SonarScanner CLI to PATH
-        run: |
-          $env:PATH += ";C:\sonar-scanner-6.2.1.4610-windows-x64\bin"
-          echo $env:PATH
-
-      # Jalankan SonarScanner
-      - name: Run SonarQube Scanner
+      # Jalankan SonarQube Scanner
+      - name: SonarQube Scan
+        uses: sonarsource/sonarqube-scan-action@v1.0.3
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          sonar-scanner.bat \
-          -Dsonar.projectKey=web-commerce\
-          -Dsonar.sources=. \
-          -Dsonar.language=php
