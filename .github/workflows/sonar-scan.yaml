@@ -23,7 +23,6 @@ jobs:
       # Jalankan Sonar Scanner
       - name: Run SonarQube Scanner
         env:
-          SONAR_HOST_URL: 'http://localhost:9000' # URL SonarQube Server
-          SONAR_TOKEN: ${{ secrets.SONARQUBE_TOKEN }} # Token API SonarQube
-        run: |
-          sonar-scanner
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: C:\sonar-scanner-6.2.1.4610-windows-x64\bin\sonar-scanner.bat
