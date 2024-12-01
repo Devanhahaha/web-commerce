@@ -11,18 +11,29 @@ jobs:
 
     steps:
       # Checkout kode Anda
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      # Install Sonar Scanner secara manual
-      - name: Download and Install Sonar Scanner
-        run: |
-          Invoke-WebRequest -Uri https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-6.2.1.4610-windows.zip -OutFile sonar-scanner.zip
-          Expand-Archive -Path sonar-scanner.zip -DestinationPath .
-          Rename-Item -Path ./sonar-scanner-cli-6.2.1.4610-windows -NewName sonar-scanner
-          $env:PATH += ";$(Resolve-Path ./sonar-scanner/bin)"
-          sonar-scanner.bat --version
+      # Tambahkan SonarScanner CLI ke Cache
+      - name: Cache SonarScanner CLI
+        uses: actions/cache@v3
+        with:
+          path: C:\sonar-scanner-6.2.1.4610-windows-x64
+          key: sonar-scanner-6.2.1
 
-      # Jalankan SonarQube Scanner
+      # Tambahkan SonarScanner CLI ke PATH
+      - name: Add SonarScanner CLI to PATH
+        run: |
+          $env:PATH += ";C:\sonar-scanner-6.2.1.4610-windows-x64\bin"
+          echo $env:PATH
+
+      # Jalankan SonarScanner
       - name: Run SonarQube Scanner
-        run: sonar-scanner.bat -Dsonar.projectKey=web-commerce -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          sonar-scanner.bat \
+          -Dsonar.projectKey=web-commerce\
+          -Dsonar.sources=. \
+          -Dsonar.language=php
