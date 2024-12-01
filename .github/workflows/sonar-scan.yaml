@@ -11,28 +11,30 @@ jobs:
 
     steps:
       # Checkout kode Anda
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Ekstrak SonarScanner dari ZIP
-      - name: Setup SonarScanner
+      # Ekstrak sonar-scanner.zip yang ada di folder tools/
+      - name: Extract sonar-scanner.zip
         run: |
-          # Ekstrak file ZIP sonar-scanner.zip
-          Expand-Archive -Path ./tools/sonar-scanner.zip -DestinationPath .
-          # Ubah nama folder hasil ekstraksi
-          Rename-Item -Path ./sonar-scanner-6.2.1.4610-windows-x64 -NewName sonar-scanner
-          # Menambahkan path ke sonar-scanner ke PATH
-          $env:PATH += ";$(Resolve-Path ./sonar-scanner/bin)"
-          # Verifikasi versi sonar-scanner
-          sonar-scanner.bat --version
+          # Buat folder tools jika belum ada
+          mkdir -p tools
+          
+          # Ekstrak file sonar-scanner.zip ke folder tools/
+          Expand-Archive -Path tools/sonar-scanner.zip -DestinationPath tools/ -Force
+          
+      # Menambahkan folder sonar-scanner ke dalam path
+      - name: Set SONAR_SCANNER_HOME
+        run: |
+          $env:SONAR_SCANNER_HOME="C:\${{ github.workspace }}\tools\sonar-scanner-cli-6.2.1.4610-windows-x64"
+          $env:PATH="$env:SONAR_SCANNER_HOME\bin;$env:PATH"
+          echo "SONAR_SCANNER_HOME=$env:SONAR_SCANNER_HOME" >> $GITHUB_ENV
+          echo "PATH=$env:PATH" >> $GITHUB_ENV
 
       # Jalankan SonarQube Scan
       - name: Run SonarQube Scan
         run: |
-          sonar-scanner.bat ^
-          -Dsonar.projectKey=devan-cell-web ^
-          -Dsonar.sources=. ^
-          -Dsonar.language=php
+          sonar-scanner.bat
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
