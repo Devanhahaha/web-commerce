@@ -38,10 +38,10 @@ jobs:
           echo "SONAR_SCANNER_HOME=$env:SONAR_SCANNER_HOME" >> $GITHUB_ENV
           echo "PATH=$env:PATH" >> $GITHUB_ENV
 
-      # Jalankan SonarQube Scan
+      # Jalankan SonarQube Scan menggunakan cmd.exe
       - name: Run SonarQube Scan
         run: |
-          sonar-scanner.bat
+          cmd /c "sonar-scanner.bat"
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
