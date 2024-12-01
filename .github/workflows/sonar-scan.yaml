@@ -17,8 +17,10 @@ jobs:
       # Ekstrak sonar-scanner.zip yang ada di folder tools/
       - name: Extract sonar-scanner.zip
         run: |
-          # Buat folder tools jika belum ada
-          mkdir -p tools
+          # Periksa apakah folder tools sudah ada
+          if (-Not (Test-Path -Path "tools")) {
+            New-Item -ItemType Directory -Path "tools"
+          }
           
           # Ekstrak file sonar-scanner.zip ke folder tools/
           Expand-Archive -Path tools/sonar-scanner.zip -DestinationPath tools/ -Force
