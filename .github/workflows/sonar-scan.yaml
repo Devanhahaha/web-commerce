@@ -21,7 +21,7 @@ jobs:
           if (-Not (Test-Path -Path "tools")) {
             New-Item -ItemType Directory -Path "tools"
           }
-          
+          #asjiajsajsiajsjaisj
           # Ekstrak file sonar-scanner.zip ke folder tools/
           Expand-Archive -Path tools/sonar-scanner.zip -DestinationPath tools/ -Force
 
