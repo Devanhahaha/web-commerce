@@ -7,16 +7,51 @@ on:
 
 jobs:
   sonar-scan:
-    runs-on: ubuntu-latest # atau windows-latest jika ingin lingkungan Windows
+    runs-on: windows-latest
 
     steps:
       # Checkout kode Anda
-      - name: Checkout Code
+      - name: Checkout code
         uses: actions/checkout@v3
 
-      # Jalankan SonarQube Scanner
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@v1.0.3
+      # Ekstrak sonar-scanner.zip yang ada di folder tools/
+      - name: Extract sonar-scanner.zip
+        run: |
+          # Periksa apakah folder tools sudah ada
+          if (-Not (Test-Path -Path "tools")) {
+            New-Item -ItemType Directory -Path "tools"
+          }
+          
+          # Ekstrak file sonar-scanner.zip ke folder tools/
+          Expand-Archive -Path tools/sonar-scanner.zip -DestinationPath tools/ -Force
+
+      # Periksa apakah file sonar-scanner.bat ada setelah ekstraksi
+      - name: Check sonar-scanner.bat file
+        run: |
+          if (Test-Path "tools/sonar-scanner-cli-6.2.1.4610-windows-x64/bin/sonar-scanner.bat") {
+            Write-Host "Found sonar-scanner.bat"
+          } else {
+            Write-Host "sonar-scanner.bat not found!"
+            exit 1
+          }
+
+      # Set path ke folder sonar-scanner
+      - name: Set SONAR_SCANNER_HOME and update PATH
+        run: |
+          # Tentukan folder tempat sonar-scanner berada
+          $env:SONAR_SCANNER_HOME="C:\${{ github.workspace }}\tools\sonar-scanner-cli-6.2.1.4610-windows-x64"
+          
+          # Update PATH environment variable untuk mengakses sonar-scanner.bat
+          $env:PATH="$env:SONAR_SCANNER_HOME\bin;$env:PATH"
+          
+          # Tampilkan variabel environment untuk debug (optional)
+          echo "SONAR_SCANNER_HOME=$env:SONAR_SCANNER_HOME" >> $GITHUB_ENV
+          echo "PATH=$env:PATH" >> $GITHUB_ENV
+
+      # Jalankan SonarQube Scan menggunakan cmd.exe
+      - name: Run SonarQube Scan
+        run: |
+          cmd /c "sonar-scanner.bat"
         env:
           SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
