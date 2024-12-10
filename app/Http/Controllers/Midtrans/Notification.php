@@ -3,39 +3,33 @@
 namespace App\Http\Controllers\Midtrans;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
- 
 
-/**
- * Read raw post input and parse as JSON. Provide getters for fields in notification object
- *
- * Example:
- *
- * ```php
- * 
- *   namespace Midtrans;
- * 
- *   $notif = new Notification();
- *   echo $notif->order_id;
- *   echo $notif->transaction_status;
- * ```
- */
 class Notification extends Controller
 {
     private $response;
+    private $transactionService;
 
-    public function __construct($input_source = "php://input")
+    public function __construct($input_data, $transactionService)
     {
-        $raw_notification = json_decode(file_get_contents($input_source), true);
-        $status_response = Transaction::status($raw_notification['transaction_id']);
-        $this->response = $status_response;
+        $this->transactionService = $transactionService;
+
+        $raw_notification = json_decode($input_data, true);
+
+        if (!isset($raw_notification['transaction_id'])) {
+            throw new \InvalidArgumentException("Invalid input: Missing 'transaction_id'");
+        }
+
+        $this->response = $this->transactionService->status($raw_notification['transaction_id']);
     }
 
-    public function __get($name)
+    public function getTransactionStatus()
     {
-        if (isset($this->response->$name)) {
-            return $this->response->$name;
-        }
+        return $this->response->transaction_status ?? null;
+    }
+
+    public function getOrderId()
+    {
+        return $this->response->order_id ?? null;
     }
 
     public function getResponse()
