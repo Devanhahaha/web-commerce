@@ -35,19 +35,19 @@ class CoreApi extends Controller
             Sanitizer::jsonRequest($payloads);
         }
 
-        if (Config::$appendNotifUrl)
+        if (Config::$appendNotifUrl) {
             Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Append-Notification: ' . Config::$appendNotifUrl;
+        }
 
-        if (Config::$overrideNotifUrl)
+        if (Config::$overrideNotifUrl) {
             Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Override-Notification: ' . Config::$overrideNotifUrl;
+        }
 
-        $result = ApiRequestor::post(
+        return ApiRequestor::post(
             Config::getBaseUrl() . '/charge',
             Config::$serverKey,
             $payloads
         );
-
-        return $result;
     }
 
     /**
@@ -57,16 +57,14 @@ class CoreApi extends Controller
      */
     public static function capture($param)
     {
-        $payloads = array(
-        'transaction_id' => $param,
-        );
+        $payloads = [
+            'transaction_id' => $param,
+        ];
 
-        $result = ApiRequestor::post(
+        return ApiRequestor::post(
             Config::getBaseUrl() . '/capture',
             Config::$serverKey,
             $payloads
         );
-
-        return $result;
     }
 }
