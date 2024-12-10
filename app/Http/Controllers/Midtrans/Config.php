@@ -8,85 +8,60 @@ use App\Http\Controllers\Controller;
 /**
  * Midtrans Configuration
  */
-class Config extends Controller
+class MidtransConfig
 {
+    public $serverKey;
+    public $clientKey;
+    public $isProduction;
+    public $is3ds;
+    public $appendNotifUrl;
+    public $overrideNotifUrl;
+    public $isSanitized;
+    public $curlOptions;
 
-    /**
-     * Your merchant's server key
-     * 
-     * @static
-     */
-    public static $serverKey;
-    /**
-     * Your merchant's client key
-     * 
-     * @static
-     */
-    public static $clientKey;
-    /**
-     * True for production
-     * false for sandbox mode
-     * 
-     * @static
-     */
-    public static $isProduction = false;
-    /**
-     * Set it true to enable 3D Secure by default
-     * 
-     * @static
-     */
-    public static $is3ds = false;
-    /**
-     *  Set Append URL notification
-     * 
-     * @static
-     */
-    public static $appendNotifUrl;
-    /**
-     *  Set Override URL notification
-     * 
-     * @static
-     */
-    public static $overrideNotifUrl;
-    /**
-     * Enable request params sanitizer (validate and modify charge request params).
-     * See Midtrans_Sanitizer for more details
-     * 
-     * @static
-     */
-    public static $isSanitized = false;
-    /**
-     * Default options for every request
-     * 
-     * @static
-     */
-    public static $curlOptions = array();
-
-    const SANDBOX_BASE_URL = 'https://api.sandbox.midtrans.com/v2';
-    const PRODUCTION_BASE_URL = 'https://api.midtrans.com/v2';
-    
-    const SNAP_SANDBOX_BASE_URL = 'https://app.sandbox.midtrans.com/snap/v1';
-    const SNAP_PRODUCTION_BASE_URL = 'https://app.midtrans.com/snap/v1';
-
-    /**
-     * Get baseUrl
-     * 
-     * @return string Midtrans API URL, depends on $isProduction
-     */
-    public static function getBaseUrl()
+    public function __construct(array $config = [])
     {
-        return Config::$isProduction ?
-        Config::PRODUCTION_BASE_URL : Config::SANDBOX_BASE_URL;
+        $this->serverKey = $config['serverKey'] ?? null;
+        $this->clientKey = $config['clientKey'] ?? null;
+        $this->isProduction = $config['isProduction'] ?? false;
+        $this->is3ds = $config['is3ds'] ?? false;
+        $this->appendNotifUrl = $config['appendNotifUrl'] ?? null;
+        $this->overrideNotifUrl = $config['overrideNotifUrl'] ?? null;
+        $this->isSanitized = $config['isSanitized'] ?? false;
+        $this->curlOptions = $config['curlOptions'] ?? [];
+    }
+}
+
+class Config
+{
+    const BASE_URLS = [
+        'sandbox' => 'https://api.sandbox.midtrans.com/v2',
+        'production' => 'https://api.midtrans.com/v2',
+    ];
+
+    const SNAP_BASE_URLS = [
+        'sandbox' => 'https://app.sandbox.midtrans.com/snap/v1',
+        'production' => 'https://app.midtrans.com/snap/v1',
+    ];
+
+    private static $config;
+
+    public static function initialize(MidtransConfig $config)
+    {
+        self::$config = $config;
     }
 
-    /**
-     * Get snapBaseUrl
-     * 
-     * @return string Snap API URL, depends on $isProduction
-     */
+    public static function getBaseUrl()
+    {
+        return self::$config->isProduction
+            ? self::BASE_URLS['production']
+            : self::BASE_URLS['sandbox'];
+    }
+
     public static function getSnapBaseUrl()
     {
-        return Config::$isProduction ?
-        Config::SNAP_PRODUCTION_BASE_URL : Config::SNAP_SANDBOX_BASE_URL;
+        return self::$config->isProduction
+            ? self::SNAP_BASE_URLS['production']
+            : self::SNAP_BASE_URLS['sandbox'];
     }
 }
