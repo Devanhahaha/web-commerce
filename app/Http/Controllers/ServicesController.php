@@ -9,32 +9,22 @@ use Illuminate\Support\Facades\Auth;
 
 class ServicesController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
         return view('services');
     }
-
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
         return view('addservices');
     }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
+        $rules = 'required|string|max:255';
         $request->validate([
             'name' => 'required|alpha',
-            'alamat' => 'required|string|max:255',
-            'jenis' => 'required|string|max:255',
-            'keluhan' => 'required|string|max:255',
+            'alamat' =>  $rules,
+            'jenis' =>  $rules,
+            'keluhan' =>  $rules,
             'number' => 'required|numeric',
         ]);
 
@@ -61,57 +51,23 @@ class ServicesController extends Controller
         ]);
         return redirect()->route('laporanservices.index');
     }
-
     public function updateNominal(Request $request)
-{
-    $transaksiId = $request->input('id');
-    $nominal = $request->input('nominal');
-
-    $transaksi = Transaksi::find($transaksiId);
-    if ($transaksi && $transaksi->jenis_transaksi == 'SERVICES') {
-        $transaksi->services->nominal = $nominal;
-        $transaksi->services->save();
-
-        // Update the status to 'lunas'
-        $transaksi->status = 'lunas';
-        $transaksi->save();
-
-        return response()->json(['success' => true]);
-    }
-
-    return response()->json(['success' => false], 400);
-}
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
     {
-        //
-    }
+        $transaksiId = $request->input('id');
+        $nominal = $request->input('nominal');
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        $transaksi = Transaksi::find($transaksiId);
+        if ($transaksi && $transaksi->jenis_transaksi == 'SERVICES') {
+            $transaksi->services->nominal = $nominal;
+            $transaksi->services->save();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+            // Update the status to 'lunas'
+            $transaksi->status = 'lunas';
+            $transaksi->save();
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+            return response()->json(['success' => true]);
+        }
+
+        return response()->json(['success' => false], 400);
     }
 }
