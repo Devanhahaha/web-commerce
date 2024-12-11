@@ -14,8 +14,6 @@ use Illuminate\Http\Request;
 class SnapApiRequestor extends Controller
 {
     /**
-     * Send GET request
-     * 
      * @param string  $url
      * @param string  $server_key
      * @param mixed[] $data_hash
@@ -26,8 +24,6 @@ class SnapApiRequestor extends Controller
     }
 
     /**
-     * Send POST request
-     * 
      * @param string  $url
      * @param string  $server_key
      * @param mixed[] $data_hash
@@ -38,8 +34,6 @@ class SnapApiRequestor extends Controller
     }
 
     /**
-     * Actually send request to API server
-     * 
      * @param string  $url
      * @param string  $server_key
      * @param mixed[] $data_hash
@@ -48,85 +42,53 @@ class SnapApiRequestor extends Controller
     public static function remoteCall($url, $server_key, $data_hash, $post = true)
     {
         $ch = curl_init();
+        $curl_options = self::prepareCurlOptions($url, $server_key, $data_hash, $post);
+        curl_setopt_array($ch, $curl_options);
 
-        $curl_options = array(
-        CURLOPT_URL => $url,
-        CURLOPT_HTTPHEADER => array(
-            'Content-Type: application/json',
-            'Accept: application/json',
-            'Authorization: Basic ' . base64_encode($server_key . ':')
-        ),
-        CURLOPT_RETURNTRANSFER => 1,
-        // CURLOPT_CAINFO => dirname(__FILE__) . "/../data/cacert.pem"
-        );
+        $result = self::executeCurl($ch, $url);
+        $info = curl_getinfo($ch);
 
-        // merging with Config::$curlOptions
-        if (count(Config::$curlOptions)) {
-            // We need to combine headers manually, because it's array and it will no be merged
-            if (Config::$curlOptions[CURLOPT_HTTPHEADER]) {
-                $mergedHeders = array_merge($curl_options[CURLOPT_HTTPHEADER], Config::$curlOptions[CURLOPT_HTTPHEADER]);
-                $headerOptions = array( CURLOPT_HTTPHEADER => $mergedHeders );
-            } else {
-                $mergedHeders = array();
-            }
-
-            $curl_options = array_replace_recursive($curl_options, Config::$curlOptions, $headerOptions);
-        }
+        return self::processResult($result, $info, $url);
+    }
+    private static function prepareCurlOptions($url, $server_key, $data_hash, $post)
+    {
+        $curl_options = [
+            CURLOPT_URL => $url,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Authorization: Basic ' . base64_encode($server_key . ':')
+            ],
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_SSL_VERIFYPEER => false,
+        ];
 
         if ($post) {
-            $curl_options[CURLOPT_POST] = 1;
-
-            if ($data_hash) {
-                $body = json_encode($data_hash);
-                $curl_options[CURLOPT_POSTFIELDS] = $body;
-            } else {
-                $curl_options[CURLOPT_POSTFIELDS] = '';
-            }
+            $curl_options[CURLOPT_POST] = true;
+            $curl_options[CURLOPT_POSTFIELDS] = $data_hash ? json_encode($data_hash) : '';
         }
 
-        curl_setopt_array($ch, $curl_options);
-	    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, FALSE);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
-
-        // For testing purpose
-        if (class_exists('\Midtrans\VT_Tests') && VT_Tests::$stubHttp) {
-            $result = self::processStubed($curl_options, $url, $server_key, $data_hash, $post);
-            $info = VT_Tests::$stubHttpStatus;
-        } else {
-            $result = curl_exec($ch);
-            $info = curl_getinfo($ch);
-            // curl_close($ch);
-        }
+        return $curl_options;
+    }
+    private static function executeCurl($ch)
+    {
+        $result = curl_exec($ch);
 
         if ($result === false) {
-            throw new \Exception('CURL Error: ' . curl_error($ch), curl_errno($ch));
-        } else {
-            try {
-                $result_array = json_decode($result);
-            } catch (\Exception $e) {
-                $message = "API Request Error unable to json_decode API response: ".$result . ' | Request url: '.$url;
-                throw new \Exception($message);
-            }
-            if ($info['http_code'] != 201) {
-                $message = 'Midtrans Error (' . $info['http_code'] . '): '
-                    . $result . ' | Request url: '.$url;
-                throw new \Exception($message, $info['http_code']);
-            } else {
-                return $result_array;
-            }
+            throw new CurlException('CURL Error: ' . curl_error($ch), curl_errno($ch));
         }
+
+        return $result;
     }
-
-    private static function processStubed($curl, $url, $server_key, $data_hash, $post)
+    private static function processResult($result, $info)
     {
-        VT_Tests::$lastHttpRequest = array(
-        "url" => $url,
-        "server_key" => $server_key,
-        "data_hash" => $data_hash,
-        "post" => $post,
-        "curl" => $curl
-        );
+        $result_array = json_decode($result);
 
-        return VT_Tests::$stubHttpResponse;
+        if ($info['http_code'] != 201) {
+            throw new ApiException('Midtrans Error (' . $info['http_code'] . '): ' . $result, $info['http_code']);
+        }
+
+        return $result_array;
     }
 }
