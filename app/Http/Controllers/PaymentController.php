@@ -37,6 +37,8 @@ class PaymentController extends Controller
         return view('payment', compact('snapToken'));
     }
 
+
+
     public function success()
     {
         return view('success');
@@ -46,7 +48,7 @@ class PaymentController extends Controller
     {
         try {
             $data = $request;
-            
+
             $payment = Transaksi::find($data['order_id'])->update([
                 'status'    => 'lunas'
             ]);
@@ -55,15 +57,13 @@ class PaymentController extends Controller
                 'status' => true,
                 'message' => 'Transaksi Berhasil diterima app.',
             ], 200);
-
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
                 'message' => $e->getMessage(),
             ], 500);
         }
-        
+
         // echo "<pre><code>" .json_encode(json_decode($json), JSON_PRETTY_PRINT).'</code></pre>';
     }
-
 }

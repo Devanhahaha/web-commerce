@@ -20,6 +20,71 @@ class BayarTagihanCustController extends Controller
         Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
         Config::$is3ds = env('MIDTRANS_IS_3DS');
     }
+
+    public function getToken(Request $request)
+    {
+        // Validasi input
+        $request->validate([
+            'nominal' => 'required|numeric',
+            'name' => 'required|string',
+            'number' => 'required|string|max:15',
+            'jenis_tagihan' => 'required|in:PLN,BPJS,Telepon,Internet,TV,Kredit,Asuransi', // Sesuaikan dengan jenis tagihan yang dibolehkan
+        ]);
+
+        // Membuat transaksi Midtrans
+        $transaction_details = [
+            'order_id' => uniqid('TRX-BAYARTAGIHAN-'),
+            'gross_amount' => $request->nominal, // Nominal tagihan yang ingin dibayar
+        ];
+
+        $customer_details = [
+            'first_name'    => $request->name,
+            'email'         => Auth::user()->email,
+            'phone'         => $request->number,
+        ];
+
+        $enable_payments = [
+            "credit_card",
+            "cimb_clicks",
+            "bca_klikbca",
+            "bca_klikpay",
+            "bri_epay",
+            "echannel",
+            "permata_va",
+            "bca_va",
+            "bni_va",
+            "bri_va",
+            "other_va",
+            "gopay",
+            "indomaret",
+            "danamon_online",
+            "akulaku",
+            "shopeepay"
+        ];
+
+        $transactionMidtrans = [
+            'enabled_payments' => $enable_payments,
+            'transaction_details' => $transaction_details,
+            'customer_details' => $customer_details,
+        ];
+
+        try {
+            // Mendapatkan token transaksi dari Midtrans
+            $snapToken = Snap::getSnapToken($transactionMidtrans);
+
+            // Mengembalikan token dalam response
+            return response()->json([
+                'token' => $snapToken
+            ], 200);
+        } catch (\Exception $e) {
+            // Menangani error
+            return response()->json([
+                'status' => 'error',
+                'message' => $e->getMessage()
+            ], 500);
+        }
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -88,10 +153,22 @@ class BayarTagihanCustController extends Controller
             ];
 
             $enable_payments = [
-                "credit_card", "cimb_clicks", "bca_klikbca",
-                "bca_klikpay", "bri_epay", "echannel", "permata_va",
-                "bca_va", "bni_va", "bri_va", "other_va", "gopay",
-                "indomaret", "danamon_online", "akulaku", "shopeepay"
+                "credit_card",
+                "cimb_clicks",
+                "bca_klikbca",
+                "bca_klikpay",
+                "bri_epay",
+                "echannel",
+                "permata_va",
+                "bca_va",
+                "bni_va",
+                "bri_va",
+                "other_va",
+                "gopay",
+                "indomaret",
+                "danamon_online",
+                "akulaku",
+                "shopeepay"
             ];
 
             $transactionMidtrans = [

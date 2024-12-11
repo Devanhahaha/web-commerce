@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5e6b1d263fbe134bc0036f5343a93e2a",
+    "content-hash": "df48d41a927234c46c773b8f8b78bbf5",
     "packages": [
         {
             "name": "brick/math",
@@ -2025,21 +2025,22 @@
         },
         {
             "name": "midtrans/midtrans-php",
-            "version": "2.5.2",
+            "version": "2.6.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Midtrans/midtrans-php.git",
-                "reference": "a1ad0c824449ca8c68c4cf11b3417ad518311d2b"
+                "reference": "737ddabeb0c4d40316c4db132f9ef5c8f7a1b3a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Midtrans/midtrans-php/zipball/a1ad0c824449ca8c68c4cf11b3417ad518311d2b",
-                "reference": "a1ad0c824449ca8c68c4cf11b3417ad518311d2b",
+                "url": "https://api.github.com/repos/Midtrans/midtrans-php/zipball/737ddabeb0c4d40316c4db132f9ef5c8f7a1b3a6",
+                "reference": "737ddabeb0c4d40316c4db132f9ef5c8f7a1b3a6",
                 "shasum": ""
             },
             "require": {
                 "ext-curl": "*",
                 "ext-json": "*",
+                "ext-openssl": "*",
                 "php": ">=5.4"
             },
             "require-dev": {
@@ -2074,9 +2075,9 @@
             "homepage": "https://midtrans.com",
             "support": {
                 "issues": "https://github.com/Midtrans/midtrans-php/issues",
-                "source": "https://github.com/Midtrans/midtrans-php/tree/2.5.2"
+                "source": "https://github.com/Midtrans/midtrans-php/tree/v2.6.1"
             },
-            "time": "2021-08-23T08:52:05+00:00"
+            "time": "2024-10-16T08:55:12+00:00"
         },
         {
             "name": "monolog/monolog",

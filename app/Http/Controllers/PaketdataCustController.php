@@ -80,10 +80,22 @@ class PaketDataCustController extends Controller
             ];
 
             $enable_payments = [
-                "credit_card", "cimb_clicks", "bca_klikbca",
-                "bca_klikpay", "bri_epay", "echannel", "permata_va",
-                "bca_va", "bni_va", "bri_va", "other_va", "gopay",
-                "indomaret", "danamon_online", "akulaku", "shopeepay"
+                "credit_card",
+                "cimb_clicks",
+                "bca_klikbca",
+                "bca_klikpay",
+                "bri_epay",
+                "echannel",
+                "permata_va",
+                "bca_va",
+                "bni_va",
+                "bri_va",
+                "other_va",
+                "gopay",
+                "indomaret",
+                "danamon_online",
+                "akulaku",
+                "shopeepay"
             ];
 
             $transactionMidtrans = [
@@ -105,5 +117,69 @@ class PaketDataCustController extends Controller
 
 
         return redirect()->route('paketdataCust.success');
+    }
+
+    public function generateToken(Request $request)
+    {
+        // Validasi request
+        $request->validate([
+            'name' => 'required|alpha',
+            'number' => 'required|numeric',
+            'jenis' => 'required|alpha',
+            'nominal' => 'required',
+        ]);
+
+        try {
+            $data = explode(' - ', $request->nominal);
+            $cash = preg_replace("/[^0-9]/", "", $data[1]);
+
+            $transaction_details = [
+                'order_id' => 'ORDER-' . uniqid(),
+                'gross_amount' => $cash, // no decimal allowed for creditcard
+            ];
+
+            $customer_details = [
+                'first_name' => $request->name,
+                'email'      => Auth::user()->email ?? 'example@email.com', // Gunakan data user jika tersedia
+                'phone'      => $request->number,
+            ];
+
+            $enable_payments = [
+                "credit_card",
+                "cimb_clicks",
+                "bca_klikbca",
+                "bca_klikpay",
+                "bri_epay",
+                "echannel",
+                "permata_va",
+                "bca_va",
+                "bni_va",
+                "bri_va",
+                "other_va",
+                "gopay",
+                "indomaret",
+                "danamon_online",
+                "akulaku",
+                "shopeepay"
+            ];
+
+            $transactionMidtrans = [
+                'enabled_payments'    => $enable_payments,
+                'transaction_details' => $transaction_details,
+                'customer_details'    => $customer_details,
+            ];
+
+            // Mendapatkan token transaksi
+            $transaction_token = Snap::getSnapToken($transactionMidtrans);
+
+            return response()->json([
+                'token'   => $transaction_token,
+            ], 200);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => $e->getMessage(),
+            ], 500);
+        }
     }
 }

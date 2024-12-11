@@ -5,12 +5,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\PulsaController;
+use App\Http\Controllers\PulsaCustController;
 use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ServicesController;
 use App\Http\Controllers\Api\PaketdataController;
 use App\Http\Controllers\Api\TransaksiController;
+use App\Http\Controllers\PaketDataCustController;
 use App\Http\Controllers\Api\ProductCustController;
 use App\Http\Controllers\Api\BayarTagihanController;
+use App\Http\Controllers\Api\PulsaCustController as ApiPulsaCustController;
+use App\Http\Controllers\BayarTagihanCustController;
+use App\Http\Controllers\Api\ApiPaketDataCustController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,13 +62,31 @@ Route::middleware(['jwt.auth'])->group(function () {
     //bayartagihan
     Route::get('/bayartagihan', [BayarTagihanController::class, 'index']);
     Route::post('/bayartagihan', [BayarTagihanController::class, 'store']);
+    Route::post('/bayartagihan/gettoken', [BayarTagihanCustController::class, 'getToken']);
+
 
     //services
     Route::get('/services', [ServicesController::class, 'index']);
     Route::post('/services', [ServicesController::class, 'store']);
 
+    // pulsacust
+    Route::post('/pulsaCust', [ApiPulsaCustController::class, 'store']);
+    Route::post('/pulsa/createTransaction', [PulsaCustController::class, 'token']);
+    Route::post('/pulsa/callback', [ApiPulsaCustController::class, 'midtransCallback']);
+
+
+    //paketdatacust
+    Route::post('/paketdataCust', [ApiPaketdataCustController::class, 'store']);
+    Route::post('/paketdata/createTransaction', [PaketDataCustController::class, 'generateToken']);
+
+    //bayarttagihan
+    Route::post('/bayartagihanCust', [BayarTagihanCustController::class, 'store']);
+    Route::post('/bayartagihan/gettoken', [BayarTagihanCustController::class, 'getToken']);
+
     //productcust
     Route::get('/productcust', [ProductCustController::class, 'index']);
+    Route::post('/productcust/checkout', [ProductCustController::class, 'store']);
+    Route::post('/gettoken', [ProductCustController::class, 'getMidtransToken']);
 
     //transaksi
     Route::get('/transaksi', [TransaksiController::class, 'index']);

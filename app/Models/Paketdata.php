@@ -3,7 +3,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class PaketData extends Model implements FeatureInterface {
+class Paketdata extends Model implements FeatureInterface {
     protected $table = 'paket_datas'; 
     protected $guarded = [];
 

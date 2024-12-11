@@ -2,24 +2,33 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Models\Pulsa;
 use App\Models\Transaksi;
+use App\Models\Bayartagihan;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class PulsaController extends Controller
+class BayarTagihanCustController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pulsa = Pulsa::get();
+        $bayartagihan = Bayartagihan::get();
         return response()->json([
             'status' => true,
-            'message' => 'apalah',
-            'data' => $pulsa,
+            'message' => 'success',
+            'data' => $bayartagihan,
         ], 200);
+
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -29,7 +38,7 @@ class PulsaController extends Controller
     {
         try {
 
-            $jenis = 'PULSA';
+            $jenis = 'BAYARTAGIHAN';
             $prefix = "TRX-$jenis-";
             $uniquePart = uniqid();
             $code = strtoupper($prefix . substr($uniquePart, -6));
@@ -39,38 +48,46 @@ class PulsaController extends Controller
                 'order_id' => $code,
                 'status' => 'lunas',
                 'jenis_transaksi' => $jenis,
-                'jenis_pembayaran' => 'cash'
+                'jenis_pembayaran' => 'online'
             ]);
 
             $nominal = str_replace('.', '', $request->nominal);
 
-            $pulsa = Pulsa::create([
+            $bayartagihan = Bayartagihan::create([
                 'transaksi_id' => $transaksi->id,
                 'nama' => $request->nama,
-                'no_telp' => $request->no_telp,
+                'tipe_tagihan' => $request->tipe_tagihan,
+                'no_tagihan' => $request->no_tagihan,
                 'nominal' => $nominal,
                 'harga' => $request->harga,
-                'tipe_kartu' => $request->tipe_kartu,
             ]);
 
             return response()->json([
                 "status" => true,
                 "message" => "success submitting data",
-                "data" => $pulsa,
+                "data" => $bayartagihan,
             ], 200);
-        } catch (\Throwable $th) {
+        }catch (\Throwable $th) {
             return response()->json([
                 "status" => 500,
                 "message" => "Error submitting data",
                 "error" => $th->getMessage()
             ], 500);
-        }
     }
+}
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
+    {
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     */
+    public function edit(string $id)
     {
         //
     }
