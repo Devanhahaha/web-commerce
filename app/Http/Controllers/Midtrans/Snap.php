@@ -12,86 +12,71 @@ use App\Http\Controllers\Controller;
 class Snap extends Controller
 {
     /**
-     * Create Snap payment page
-     *
-     * Example:
-     *
-     * ```php
-     *   
-     *   namespace Midtrans;
-     * 
-     *   $params = array(
-     *     'transaction_details' => array(
-     *       'order_id' => rand(),
-     *       'gross_amount' => 10000,
-     *     )
-     *   );
-     *   $paymentUrl = Snap::getSnapToken($params);
-     * ```
-     *
      * @param  array $params Payment options
      * @return string Snap token.
      * @throws Exception curl error or midtrans error
      */
     public static function getSnapToken($params)
     {
-        return (Snap::createTransaction($params));
+        return Snap::createTransaction($params);
     }
 
     /**
-     * Create Snap payment page, with this version returning full API response
-     *
-     * Example:
-     *
-     * ```php
-     *   $params = array(
-     *     'transaction_details' => array(
-     *       'order_id' => rand(),
-     *       'gross_amount' => 10000,
-     *     )
-     *   );
-     *   $paymentUrl = Snap::getSnapToken($params);
-     * ```
-     *
      * @param  array $params Payment options
      * @return object Snap response (token and redirect_url).
      * @throws Exception curl error or midtrans error
      */
     public static function createTransaction($params)
     {
-        $payloads = array(
-        'credit_card' => array(
-            // 'enabled_payments' => array('credit_card'),
-            'secure' => Config::$is3ds
-        )
-        );
+        $params = self::addCreditCardConfig($params);
 
         if (isset($params['item_details'])) {
-            $gross_amount = 0;
-            foreach ($params['item_details'] as $item) {
-                $gross_amount += $item['quantity'] * $item['price'];
-            }
-            $params['transaction_details']['gross_amount'] = $gross_amount;
+            $params['transaction_details']['gross_amount'] = self::calculateGrossAmount($params['item_details']);
         }
 
         if (Config::$isSanitized) {
             Sanitizer::jsonRequest($params);
         }
 
-        if (Config::$appendNotifUrl)
-            Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Append-Notification: ' . Config::$appendNotifUrl;
+        self::configureNotificationHeaders();
 
-        if (Config::$overrideNotifUrl)
-            Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Override-Notification: ' . Config::$overrideNotifUrl;
+        $params = array_replace_recursive(self::getDefaultPayloads(), $params);
 
-        $params = array_replace_recursive($payloads, $params);
-
-        $result = SnapApiRequestor::post(
+        return SnapApiRequestor::post(
             Config::getSnapBaseUrl() . '/transactions',
             Config::$serverKey,
             $params
         );
+    }
+    private static function addCreditCardConfig($params)
+    {
+        $params['credit_card'] = ['secure' => Config::$is3ds];
+        return $params;
+    }
+    private static function calculateGrossAmount($items)
+    {
+        $grossAmount = 0;
+        foreach ($items as $item) {
+            $grossAmount += $item['quantity'] * $item['price'];
+        }
+        return $grossAmount;
+    }
+    private static function configureNotificationHeaders()
+    {
+        if (Config::$appendNotifUrl) {
+            Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Append-Notification: ' . Config::$appendNotifUrl;
+        }
 
-        return $result;
-    }  
+        if (Config::$overrideNotifUrl) {
+            Config::$curlOptions[CURLOPT_HTTPHEADER][] = 'X-Override-Notification: ' . Config::$overrideNotifUrl;
+        }
+    }
+    private static function getDefaultPayloads()
+    {
+        return [
+            'credit_card' => [
+                'secure' => Config::$is3ds,
+            ],
+        ];
+    }
 }
