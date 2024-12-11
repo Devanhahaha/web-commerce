@@ -10,175 +10,114 @@ use App\Models\Transaksi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\MidtransController;
-use App\Models\Transaction; // Tambahkan ini jika belum ada
 
 class PulsaCustController extends Controller
 {
+    public function __construct()
+    {
+        $this->initializeMidtrans();
+    }
     public function index()
     {
         return view('pulsaCust');
     }
-
-    public function __construct()
+    private function initializeMidtrans()
     {
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
         Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
         Config::$is3ds = env('MIDTRANS_IS_3DS');
     }
-
-    public function create()
-    {
-        // Tambahkan fungsi ini jika diperlukan
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
-        // membuat transaksi
+        DB::beginTransaction();
+        try {
+            $this->validateStoreRequest($request);
+
+            $transaction = $this->createTransaction($request);
+            $this->createPulsaEntry($transaction, $request);
+
+            $this->reduceStock($request->nominal, $request->jenis);
+
+            $midtransUrl = $this->handleMidtransTransaction($transaction, $request);
+            $transaction->update(['url_transaksi' => $midtransUrl]);
+
+            DB::commit();
+            return redirect($midtransUrl);
+        } catch (\App\Exceptions\InsufficientStockException $e) {
+            DB::rollBack();
+            return redirect()->back()->withErrors($e->getMessage());
+        } catch (\Exception $e) {
+            DB::rollBack();
+            logger()->error("Transaction Error: " . $e->getMessage());
+            return redirect()->back()->withErrors('Transaction failed. Please try again.');
+        }
+    }
+    private function validateStoreRequest(Request $request)
+    {
         $request->validate([
             'name' => 'required|alpha',
             'number' => 'required|numeric',
             'nominal' => 'required|numeric',
-            'jenis' => 'required|alpha'
+            'jenis' => 'required|alpha',
         ]);
-        
-        DB::beginTransaction();
-        try {
-            $jenis = 'PULSA';
-            $prefix = "TRX-$jenis-";
-            $uniquePart = uniqid();
-            $code = strtoupper($prefix . substr($uniquePart, -6));
-        
-            $transaksi = Transaksi::create([
-                'user_id' => Auth::user()->id,
-                'order_id' => $code,
-                'status' => 'lunas',
-                'jenis_transaksi' => $jenis,
-                'jenis_pembayaran' => 'online'
-            ]);
-        
-            $nominal = str_replace('.', '', $request->nominal);
-        
-            Pulsa::create([
-                'transaksi_id' => $transaksi->id,
-                'nama' => $request->name,
-                'no_telp' => $request->number,
-                'nominal' => $nominal,
-                'harga' => $request->harga,
-                'tipe_kartu' => $request->jenis,
-            ]);
-            
-
-            // Membuat Transaksi Midtrans
-            $transaction_details = [
-                'order_id' => $transaksi->id,
-                'gross_amount' => $request->harga, // no decimal allowed for creditcard
-            ];
-
-            $customer_details = [
-                'first_name'    => $request->name,
-                'email'         => Auth::user()->email,
-                'phone'         => $request->number,
-            ];
-
-            $enable_payments = ["credit_card", "cimb_clicks", "bca_klikbca",
-                                "bca_klikpay", "bri_epay", "echannel", "permata_va",
-                                "bca_va", "bni_va", "bri_va", "other_va", "gopay",
-                                "indomaret", "danamon_online", "akulaku", "shopeepay"];
-
-            $transactionMidtrans = [
-                'enabled_payments' => $enable_payments,
-                'transaction_details' => $transaction_details,
-                'customer_details' => $customer_details,
-            ];
-        
-            $url_transaction = Snap::createTransaction($transactionMidtrans)->redirect_url;
-
-            $transaksi->url_transaksi = $url_transaction;
-            $transaksi->save();
-
-            DB::commit();
-            return redirect($url_transaction);
-
-            
-        } catch (\Exception $e) {
-            dd($e->getMessage());
-        }
-
-        $this->kurangiStokPulsa($nominal, $request->jenis);
-        return redirect()->route('pulsaCust.success');
     }
-
-    /**
-     * Get Snap token for the transaction.
-     */
-    public function token(Request $request)
+    private function createTransaction()
+    {
+        $orderId = $this->generateOrderId('PULSA');
+        return Transaksi::create([
+            'user_id' => Auth::id(),
+            'order_id' => $orderId,
+            'status' => 'pending',
+            'jenis_transaksi' => 'PULSA',
+            'jenis_pembayaran' => 'online',
+        ]);
+    }
+    private function createPulsaEntry($transaction, Request $request)
+    {
+        $nominal = str_replace('.', '', $request->nominal);
+        Pulsa::create([
+            'transaksi_id' => $transaction->id,
+            'nama' => $request->name,
+            'no_telp' => $request->number,
+            'nominal' => $nominal,
+            'harga' => $request->harga,
+            'tipe_kartu' => $request->jenis,
+        ]);
+    }
+    private function handleMidtransTransaction($transaction, Request $request)
     {
         $transactionDetails = [
-            'order_id' => uniqid(),
-            'gross_amount' => $request->nominal + 2000 
+            'order_id' => $transaction->order_id,
+            'gross_amount' => $request->harga,
         ];
-
         $customerDetails = [
             'first_name' => $request->name,
+            'email' => Auth::user()->email,
             'phone' => $request->number,
         ];
+        $enabledPayments = ['credit_card', 'gopay', 'shopeepay', 'bank_transfer'];
 
-        $transaction = [
+        $midtransPayload = [
             'transaction_details' => $transactionDetails,
             'customer_details' => $customerDetails,
-            'enabled_payments' => ['gopay', 'shopeepay', 'alfamart', 'indomaret', 'bank_transfer']
+            'enabled_payments' => $enabledPayments,
         ];
 
-        $snapToken = Snap::getSnapToken($transaction);
-
-        return response()->json(['token' => $snapToken]);
+        return Snap::createTransaction($midtransPayload)->redirect_url;
     }
+    private function reduceStock($nominal, $jenis)
+    {
+        $wallet = Wallet::where('name', 'Pulsa ' . $jenis)->first();
 
-    private function kurangiStokPulsa($nominal, $jenis) {
-        
-        $pulsa = Wallet::where('name', 'Pulsa '. $jenis)->first();
-
-        
-        if ($pulsa) {
-            $stokBaru = $pulsa->value - $nominal; 
-            $pulsa->update(['value' => $stokBaru]);
+        if (!$wallet || $wallet->value < $nominal) {
+            throw new \App\Exceptions\InsufficientStockException("Insufficient stock for $jenis.");
         }
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        // Tambahkan fungsi ini jika diperlukan
+        $wallet->decrement('value', $nominal);
     }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
+    private function generateOrderId($type)
     {
-        // Tambahkan fungsi ini jika diperlukan
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        // Tambahkan fungsi ini jika diperlukan
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        // Tambahkan fungsi ini jika diperlukan
+        return strtoupper("TRX-$type-" . substr(uniqid(), -6));
     }
 }
