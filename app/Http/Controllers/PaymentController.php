@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use Midtrans\Snap;
+use Midtrans\Config;
 use App\Models\Transaksi;
 use Illuminate\Http\Request;
-use Midtrans\Config;
-use Midtrans\Snap;
+use App\Services\MidtransService;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class PaymentController extends Controller
 {
@@ -16,12 +18,19 @@ class PaymentController extends Controller
         Config::$isSanitized = config('midtrans.is_sanitized');
         Config::$is3ds = config('midtrans.is_3ds');
     }
-
     public function createTransaction(Request $request)
     {
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+            'first_name' => 'required|string',
+            'last_name' => 'nullable|string',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+        ]);
+
         $params = [
             'transaction_details' => [
-                'order_id' => rand(),
+                'order_id' => 'ORDER-' . uniqid(),
                 'gross_amount' => $request->amount,
             ],
             'customer_details' => [
@@ -32,38 +41,35 @@ class PaymentController extends Controller
             ],
         ];
 
-        $snapToken = Snap::getSnapToken($params);
-
+        $snapToken = MidtransService::createTransaction($params);
         return view('payment', compact('snapToken'));
     }
-
     public function success()
     {
         return view('success');
     }
-
     public function notification(Request $request)
     {
         try {
-            $data = $request;
-            
-            $payment = Transaksi::find($data['order_id'])->update([
-                'status'    => 'lunas'
+            $data = $request->validate([
+                'order_id' => 'required|exists:transaksis,id',
             ]);
 
+            Transaksi::findOrFail($data['order_id'])->update(['status' => 'lunas']);
             return response()->json([
                 'status' => true,
-                'message' => 'Transaksi Berhasil diterima app.',
+                'message' => 'Transaksi Berhasil diterima.',
             ], 200);
-
+        } catch (ModelNotFoundException $e) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Transaksi tidak ditemukan.',
+            ], 404);
         } catch (\Exception $e) {
             return response()->json([
                 'status' => false,
-                'message' => $e->getMessage(),
+                'message' => 'Terjadi kesalahan: ' . $e->getMessage(),
             ], 500);
         }
-        
-        // echo "<pre><code>" .json_encode(json_decode($json), JSON_PRETTY_PRINT).'</code></pre>';
     }
-
 }
