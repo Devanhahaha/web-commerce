@@ -19,113 +19,61 @@ use App\Models\Transaksi;
 
 class MidtransController extends Controller
 {
-
     public function notification(Request $request)
     {
-        // Set Konfigurasi Midtrans
+        $this->configureMidtrans();
+        $notification = (new Notification())->getResponse()->getData();
+        $order_id = $notification->order_id;
+
+        $transaction = Transaksi::where('order_id', $order_id)->first();
+        if (!$transaction) {
+            return $this->generateResponse(false, "Update Data Failed", 600);
+        }
+
+        $payment_status = $this->determinePaymentStatus(
+            $notification->transaction_status,
+            $notification->payment_type,
+            $notification->fraud_status
+        );
+
+        $this->updateTransactionStatus($order_id, $payment_status);
+        return $this->generateResponse(true, "Update Data Success", 201);
+    }
+    private function configureMidtrans()
+    {
         Config::$serverKey = env('MIDTRANS_SERVER_KEY');
         Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
         Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
         Config::$is3ds = env('MIDTRANS_IS_3DS');
-
-        // Instance midtrans notification
-        $notification = new Notification();
-        $notification = $notification->getResponse()->getData();
-
-
-        // Assign ke variabel untuk mempermudah code
-        $status = $notification->transaction_status;
-        $type = $notification->payment_type;
-        $fraud = $notification->fraud_status;
-        $order_id = $notification->order_id;
-        $payment_type = $notification->payment_type;
-        $gross_amount = (int)$notification->gross_amount;
-
-
-        $transaction = Transaksi::where('order_id', $order_id)->first();
-
-        // Cari transaksi berdasarkan ID
-        if (empty($transaction)) {
-            return response()->json([
-                "status" => false,
-                "message" => "Update Data Failed",
-                "code" => 600
-            ], 201);
+    }
+    private function generateResponse($status, $message, $code)
+    {
+        return response()->json([
+            "status" => $status,
+            "message" => $message,
+            "code" => $code,
+        ], 201);
+    }
+    private function determinePaymentStatus($status, $type, $fraud)
+    {
+        if ($status == 'capture' && $type == 'credit_card') {
+            return ($fraud == 'challenge') ? 1 : 4;
         }
-
-        // Handle notifikasi status midtrans
-        if ($status == 'capture') {
-            if ($type == 'credit_card') {
-                if ($fraud == 'challenge') {
-                    $payment_status = 1;
-                }else{
-                    $payment_status = 4;
-                }
-            }
-        }else if ($status == 'settlement') {
-            $payment_status = 4;
-        }else if ($status == 'pending') {
-            $payment_status = 1;
-        }else if ($status == 'deny') {
-            $payment_status = 8;
-        }else if ($status == 'expire') {
-            $payment_status = 8;
-        }else if ($status == 'cancel') {
-            $payment_status = 8;
-        }
-
+        return match ($status) {
+            'settlement' => 4,
+            'pending' => 1,
+            'deny', 'expire', 'cancel' => 8,
+            default => 0,
+        };
+    }
+    private function updateTransactionStatus($order_id, $payment_status)
+    {
         if ($payment_status == 4) {
-           $transaction = Transaksi::where('order_id', $order_id)->update([
-                'status'=> 'lunas',
-            ]);
-        }
-
-        if (!empty($transaction)) {
-            return response()->json([
-                "status" => true,
-                "message" => "Update Data Success",
-                "code" => 201,
-            ], 201);
-        } else {
-            return response()->json([
-                "status" => false,
-                "message" => "Update Data Failed",
-                "code" => 600
-            ], 201);
+            Transaksi::where('order_id', $order_id)->update(['status' => 'lunas']);
         }
     }
-
-    public function finish(Request $request)
-    {
-        return view('success');
-    }
-
-    public function unfinished(Request $request)
-    {
-        echo "Transaction Unfinished yet :( <br>";
-        echo json_decode($request);
-    }
-
-    public function error(Request $request)
-    {
-        echo "Transaction Fail :| <br>";
-        echo json_decode($request);
-    }
-
-    /* Request Params untuk Notifikasi (Example)
-            $paramNotif = [
-                'id_user'   => $save->id_user,
-                'title'     => 'Pesanan',
-                'body'      => 'Pesanan ID : '.$save->id_transaction.' Telah Dibuat! Silahkan selesaikan pembayaran.',
-                'screen'    => 'checkout',
-                'notificationData' => $save->getRawOriginal()
-            ];
-
-            // MidtransController::SendNotification($paramNotif);
-    */
     public static function SendNotification($request = '')
     {
-    
+        // This method is intentionally left blank. Future implementation goes here.
     }
-    
 }
