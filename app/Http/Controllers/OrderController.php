@@ -2,246 +2,127 @@
 
 namespace App\Http\Controllers;
 
-use Midtrans\Snap;
-use Midtrans\Config;
 use App\Models\Order;
-use App\Models\Product;
-use App\Models\Transaksi;
 use App\Models\ProductCust;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Exceptions\RajaOngkirException;
 
 class OrderController extends Controller
 {
-    public function __construct()
-    {
-        Config::$serverKey = env('MIDTRANS_SERVER_KEY');
-        Config::$isProduction = env('MIDTRANS_IS_PRODUCTION');
-        Config::$isSanitized = env('MIDTRANS_IS_SANITIZED');
-        Config::$is3ds = env('MIDTRANS_IS_3DS');
-    }
+    const VALIDATION_RULES = [
+        'string_max_255' => 'required|string|max:255',
+        'string_max_15' => 'required|string|max:15',
+        'nullable_string' => 'nullable|string|max:255',
+        'required' => 'required',
+    ];
+
+    const STATUS_PENDING = 'belum di kirim';
+    const STATUS_SHIPPED = 'sudah di kirim';
+    const STATUS_RECEIVED = 'barang diterima';
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'alamat' => 'required|string|max:255',
-            'no_hp' => 'required|string|max:15',
-            'catatan' => 'nullable|string',
-            'kurir' => 'required|string',
-            'provinsi' => 'required|string|max:255',
-            'kabupaten' => 'required|string|max:255',
-            'ongkir' => 'required',
-        ]);
-
-
-        DB::beginTransaction();
         try {
-            $jenis = 'PRODUCT';
-            $prefix = "TRX-$jenis-";
-            $uniquePart = uniqid();
-            $code = strtoupper($prefix . substr($uniquePart, -6));
+            // Validasi input
+            $this->validateRequest($request);
 
-            $transaksi = Transaksi::create([
-                'user_id' => Auth::user()->id,
-                'order_id' => $code,
-                'status' => 'belum di kirim', // Adjust status
-                'jenis_transaksi' => $jenis,
-                'jenis_pembayaran' => $request->payment_method,
+            // Ambil nama provinsi dan kabupaten
+            $namaProvinsi = $this->getProvinceName($request->provinsi);
+            $namaKabupaten = $this->getCityName($request->kabupaten);
+
+            // Simpan data order
+            $order = $this->createOrder($request, $namaProvinsi, $namaKabupaten);
+
+            // Simpan data produk dalam order
+            $this->createProductCustEntries($order);
+
+            // Kirim response sukses
+            return response()->json([
+                'message' => 'Order berhasil dibuat',
+                'order' => $order,
+            ], 201);
+        } catch (\Exception $e) {
+            // Log error
+            Log::error('Order Store Error', [
+                'message' => $e->getMessage(),
+                'user_id' => Auth::id(),
+                'request' => $request->all(),
             ]);
 
-            $url = 'https://api.rajaongkir.com/starter/province';
-
-            $province = $response = Http::withHeaders([
-                'key' => '6f4308547a4430b68f2481ba03aa93c2'
-            ])->get($url);
-
-            $data = $response->json();
-            
-            // Filter data untuk menemukan nama provinsi berdasarkan ID
-            $namaProvinsi = collect($data['rajaongkir']['results'])
-                ->firstWhere('province_id', $request->provinsi)['province'] ?? 'Provinsi tidak ditemukan';
-            
-                $url = 'https://api.rajaongkir.com/starter/city';
-
-                    // Memanggil API untuk mendapatkan seluruh data kabupaten
-                    $response = Http::withHeaders([
-                        'key' => '6f4308547a4430b68f2481ba03aa93c2'
-                    ])->get($url);
-            
-                    $data = $response->json();
-            
-                    // Filter data untuk menemukan nama kabupaten berdasarkan ID
-                    $namaKabupaten = collect($data['rajaongkir']['results'])
-                        ->firstWhere('city_id', $request->kabupaten)['city_name'] ?? 'Kabupaten tidak ditemukan';
-            
-            $total = 0;
-            $cart = session()->get('cart', []);
-            foreach ($request->product_id as $i => $productId) {
-                $order = ProductCust::create([
-                    'product_id' => $productId,
-                    'transaksi_id' => $transaksi->id,
-                    'alamat' => $request->alamat,
-                    'no_hp' => $request->no_hp,
-                    'catatan' => $request->catatan,
-                    'kurir' => $request->kurir,
-                    'provinsi' => $namaProvinsi,
-                    'kabupaten' => $namaKabupaten,
-                    'ongkir' => $request->ongkir,
-                    'quantity' => $request->quantity[$i],
-                    'sub_total' => $request->sub_total[$i],
-                ]);
-                $product = Product::find($productId);
-                $subtotal = $product->nominal * $request->quantity[$i];
-                $total += $subtotal;
-
-                $product->stok = $product->stok - $request->quantity[$i];
-                $product->save();
-
-                if (isset($cart[$productId]) && $cart[$productId]['user_id'] == Auth::user()->id) {
-                    unset($cart[$productId]); // Hapus produk dari cart
-                }
-            }
-
-            $total += $request->ongkir;
-
-            session()->put('cart', $cart);
-
-            if ($request->payment_method === 'online') {
-                $transaction_details = [
-                    'order_id' => $transaksi->order_id,
-                    'gross_amount' => (int)$total, // no decimal allowed for creditcard
-                ];
-
-                $customer_details = [
-                    'first_name' => Auth::user()->first_name,
-                    'email' => Auth::user()->email,
-                    'phone' => $request->no_hp,
-                ];
-
-                $enable_payments = [
-                    "credit_card",
-                    "cimb_clicks",
-                    "bca_klikbca",
-                    "bca_klikpay",
-                    "bri_epay",
-                    "echannel",
-                    "permata_va",
-                    "bca_va",
-                    "bni_va",
-                    "bri_va",
-                    "other_va",
-                    "gopay",
-                    "indomaret",
-                    "danamon_online",
-                    "akulaku",
-                    "shopeepay"
-                ];
-
-                $transactionMidtrans = [
-                    'enabled_payments' => $enable_payments,
-                    'transaction_details' => $transaction_details,
-                    'customer_details' => $customer_details,
-                ];
-
-                $url_transaction = Snap::createTransaction($transactionMidtrans)->redirect_url;
-
-                $transaksi->url_transaksi = $url_transaction;
-                $transaksi->save();
-
-                DB::commit();
-                return redirect($url_transaction);
-            } else {
-                DB::commit();
-                $transaksi = Transaksi::findOrFail($transaksi->id);
-                $order = ProductCust::where('transaksi_id', $transaksi->id)->first();
-                $product = Product::whereIn('id', $request->product_id)->get();
-
-                return view('orders.show', compact('transaksi', 'order', 'product'));
-            }
-        } catch (\Exception $e) {
-            DB::rollBack();
-            dd($e->getMessage());
-            return back()->withErrors(['error' => $e->getMessage()]);
+            return response()->json([
+                'error' => 'Terjadi kesalahan saat membuat order',
+                'details' => $e->getMessage(),
+            ], 500);
         }
     }
-
-
-    public function ship($id)
+    private function validateRequest(Request $request)
     {
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->status = 'sudah di kirim';
-        $transaksi->save();
-
-        return back()->with('status', 'Status pengiriman telah diubah menjadi "sudah di kirim".');
+        $request->validate([
+            'alamat' => self::VALIDATION_RULES['string_max_255'],
+            'no_hp' => self::VALIDATION_RULES['string_max_15'],
+            'catatan' => self::VALIDATION_RULES['nullable_string'],
+            'kurir' => self::VALIDATION_RULES['required'],
+            'provinsi' => self::VALIDATION_RULES['string_max_255'],
+            'kabupaten' => self::VALIDATION_RULES['string_max_255'],
+            'ongkir' => self::VALIDATION_RULES['required'],
+        ]);
     }
-
-    public function confirm($id)
+    private function getProvinceName($provinceId)
     {
-        $transaksi = Transaksi::findOrFail($id);
-        $transaksi->status = 'barang diterima';
-        $transaksi->save();
+        $response = Http::withHeaders(['key' => env('RAJA_ONGKIR_KEY')])
+            ->get('https://api.rajaongkir.com/starter/province');
 
-        return redirect()->back()->with('success', 'Status berhasil diubah.');
-    }
-
-    public function requestCancel($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-        if ($transaksi->status === 'belum di kirim') {
-            $transaksi->status = 'pembatalan diajukan';
-            $transaksi->save();
-            return redirect()->back()->with('success', 'Pembatalan pesanan telah diajukan.');
+        if ($response->failed() || !isset($response['rajaongkir']['results'])) {
+            throw new RajaOngkirException('Gagal mengambil data provinsi dari API Raja Ongkir.');
         }
-        return redirect()->back()->with('error', 'Pembatalan pesanan tidak dapat diajukan.');
-    }
 
-    public function confirmCancel($id)
+        return collect($response->json()['rajaongkir']['results'])
+            ->firstWhere('province_id', $provinceId)['province'] ?? 'Provinsi tidak ditemukan';
+    }
+    private function getCityName($cityId)
     {
-        $transaksi = Transaksi::findOrFail($id);
-        if ($transaksi->status === 'pembatalan diajukan') {
-            $transaksi->status = 'dibatalkan';
-            $transaksi->save();
-            return redirect()->back()->with('success', 'Pesanan berhasil dibatalkan.');
+        $response = Http::withHeaders(['key' => env('RAJA_ONGKIR_KEY')])
+            ->get('https://api.rajaongkir.com/starter/city');
+
+        if ($response->failed() || !isset($response['rajaongkir']['results'])) {
+            throw new RajaOngkirException('Gagal mengambil data kabupaten dari API Raja Ongkir.');
         }
-        return redirect()->back()->with('error', 'Pesanan tidak dapat dibatalkan.');
+
+        return collect($response->json()['rajaongkir']['results'])
+            ->firstWhere('city_id', $cityId)['city_name'] ?? 'Kabupaten tidak ditemukan';
     }
-
-
-
-    public function index()
+    private function createOrder(Request $request, $namaProvinsi, $namaKabupaten)
     {
-        //
+        return Order::create([
+            'user_id' => Auth::id(),
+            'kode_transaksi' => 'TRX-PRODUCT-' . time(),
+            'alamat' => $request->alamat,
+            'no_hp' => $request->no_hp,
+            'catatan' => $request->catatan,
+            'kurir' => $request->kurir,
+            'provinsi' => $namaProvinsi,
+            'kabupaten' => $namaKabupaten,
+            'ongkir' => $request->ongkir,
+            'status' => self::STATUS_PENDING,
+        ]);
     }
-
-    public function create()
+    private function createProductCustEntries(Order $order)
     {
-        //
-    }
+        $cartItems = ProductCust::where('user_id', Auth::id())
+            ->where('is_checkout', false)
+            ->get();
 
-    public function show($id)
-    {
-        $transaksi = Transaksi::findOrFail($id);
-        $order = ProductCust::where('transaksi_id', $transaksi->id)->first();
-        $product = Product::findOrFail($order->product_id);
-
-        return view('orders.show', compact('transaksi', 'order', 'product'));
-    }
-
-
-    public function edit(string $id)
-    {
-        //
-    }
-
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    public function destroy(string $id)
-    {
-        //
+        foreach ($cartItems as $item) {
+            $order->products()->create([
+                'product_id' => $item->product_id,
+                'quantity' => $item->quantity,
+                'subtotal' => $item->quantity * $item->price,
+            ]);
+            $item->product->decrement('stock', $item->quantity);
+            $item->update(['is_checkout' => true]);
+        }
     }
 }
