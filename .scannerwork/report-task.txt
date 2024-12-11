@@ -2,5 +2,5 @@ projectKey=web-commerce
 serverUrl=http://localhost:9000
 serverVersion=10.7.0.96327
 dashboardUrl=http://localhost:9000/dashboard?id=web-commerce
-ceTaskId=f51a5fc8-f144-4528-b710-110262de64e5
-ceTaskUrl=http://localhost:9000/api/ce/task?id=f51a5fc8-f144-4528-b710-110262de64e5
+ceTaskId=b1eb093d-c712-444c-9700-1086b1d57420
+ceTaskUrl=http://localhost:9000/api/ce/task?id=b1eb093d-c712-444c-9700-1086b1d57420
