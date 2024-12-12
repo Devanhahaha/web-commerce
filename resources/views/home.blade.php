@@ -267,7 +267,7 @@
     <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script>
-        var socket = io('http://localhost:3000');
+        var socket = io('https://socketio.petanitech.com');
 
         $('#kirim').click(function() {
             let name = $('#nama').val();

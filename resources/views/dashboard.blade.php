@@ -215,7 +215,7 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 
     <script>
-        var socket = io('http://localhost:3000');
+        var socket = io('https://socketio.petanitech.com');
 
         // Listen for incoming chat messages
         socket.on('chat', function(msg) {

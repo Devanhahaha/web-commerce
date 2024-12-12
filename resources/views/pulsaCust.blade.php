@@ -21,6 +21,7 @@
             <div class="mb-3">
                 <label for="nominal" class="form-label">Nominal</label>
                 <select class="form-select" id="nominal" name="harga" required onchange="updateHarga()">
+                    <option value="" data-harga="" selected>-- Pilih Nominal --</option>
                     <option value="12000" data-nominal="10000">Rp 10.000</option>
                     <option value="22000" data-nominal="20000">Rp 20.000</option>
                     <option value="27000" data-nominal="25000">Rp 25.000</option>
