@@ -16,42 +16,33 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-12">
+                        {{-- Form for adding product --}}
                         <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
                             @csrf
-                            <div class="mb-3">
-                                <label for="name" class="form-label">Product Name</label>
-                                <input type="text" class="form-control" id="name" name="name" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="jenis" class="form-label">Jenis</label>
-                                <input type="text" class="form-control" id="jenis" name="jenis" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="merk" class="form-label">Merk</label>
-                                <input type="text" class="form-control" id="merk" name="merk" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="deskripsi" class="form-label">Deskripsi</label>
-                                <input type="text" class="form-control" id="deskripsi" name="deskripsi" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="nominal" class="form-label">Nominal</label>
-                                <input type="text" class="form-control" id="nominal" name="nominal" required>
-                            </div>
-                            <div class="mb-3">
-                                <label for="stok" class="form-label">Stok</label>
-                                <input type="text" class="form-control" id="stok" name="stok" required>
-                            </div>
+                            @foreach ($fields as $field)
+                                <div class="mb-3">
+                                    <label for="{{ $field['id'] }}" class="form-label">{{ $field['label'] }}</label>
+                                    <input 
+                                        type="{{ $field['type'] }}" 
+                                        class="form-control" 
+                                        id="{{ $field['id'] }}" 
+                                        name="{{ $field['name'] }}" 
+                                        {{ $field['required'] ? 'required' : '' }}
+                                    >
+                                </div>
+                            @endforeach
+                            {{-- File input for image --}}
                             <div class="mb-3">
                                 <label for="gambar" class="form-label">Gambar</label>
                                 <input type="file" accept=".png, .jpg, .jpeg, .svg, .webp" class="form-control" id="gambar" name="gambar" required>
                             </div>
+                            {{-- Submit button --}}
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
                 </div>
-                </div>
             </div>
         </div>
-    </main>
-    @endsection
+    </div>
+</main>
+@endsection
