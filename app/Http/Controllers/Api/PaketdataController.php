@@ -21,24 +21,24 @@ class PaketdataController extends Controller
             'data' => $paketdata,
         ], 200);
     }
-
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         try {
             $jenis = 'PAKETDATA';
             $prefix = "TRX-$jenis-";
             $uniquePart = uniqid();
             $code = strtoupper($prefix . substr($uniquePart, -6));
 
-            $data = explode(' - ',$request->nominal);
+            $data = explode(' - ', $request->nominal);
             if (count($data) < 2) {
                 return response()->json([
                     'status' => false,
                     'message' => 'Invalid nominal format. Expected format: "text - number".',
                 ], 400);
             }
-    
-            $cash =  preg_replace("/[^0-9]/", "", $data[1]);
-            
+
+            $cash = preg_replace('/\D/', '', $data[1]);
+
 
             $transaksi = Transaksi::create([
                 'user_id' => auth()->guard('api')->user()->id,
@@ -64,12 +64,12 @@ class PaketdataController extends Controller
                 "message" => "success submitting data",
                 "data" => $paketdata,
             ], 200);
-            }   catch (\Throwable $th) {
-                    return response()->json([
-                        "status" => 500,
-                        "message" => "Error submitting data",
-                        "error" => $th->getMessage()
-                    ], 500);
-            }
+        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => 500,
+                "message" => "Error submitting data",
+                "error" => $th->getMessage()
+            ], 500);
+        }
     }
 }
