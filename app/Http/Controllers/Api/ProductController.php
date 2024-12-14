@@ -9,66 +9,72 @@ use Illuminate\Support\Facades\File;
 
 class ProductController extends Controller
 {
+    private function handleFileUpload($file, $path)
+    {
+        $nameFile = $file->getClientOriginalName();
+
+        if (!File::isDirectory($path)) {
+            File::makeDirectory($path, 0755, true, true);
+        }
+
+        $file->move($path, $nameFile);
+
+        return $path . $nameFile;
+    }
     public function index()
     {
         try {
-            $product = Product::all();
+            $products = Product::all();
 
             return response()->json([
                 "status" => 200,
                 "message" => "Data retrieved successfully",
-                "data" => $product
+                "data" => $products
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => 500,
                 "message" => "Error fetching data",
-                "error" => $th->getMessage()
+                "error" => $e->getMessage()
             ], 500);
         }
     }
-
     public function store(Request $request)
     {
         try {
             $file = $request->file('gambar');
             $path = 'files/product/';
-            $nameFile = $file->getClientOriginalName();
-
             $nominal = str_replace('.', '', $request->nominal);
 
-            $product = Product::create([
+            $productData = [
                 'nama_product' => $request->nama_product,
                 'jenis' => $request->jenis,
                 'merk' => $request->merk,
                 'deskripsi' => $request->deskripsi,
                 'stok' => $request->stok,
                 'nominal' => $nominal,
-                'gambar' => $path.$nameFile
-            ]);
+                'gambar' => $this->handleFileUpload($file, $path)
+            ];
 
-            if (!File::isDirectory($path)) File::makeDirectory($path, 0755, true, true);
-
-            $file->move($path, $nameFile);
+            $product = Product::create($productData);
 
             return response()->json([
                 "status" => 200,
                 "message" => "Data successfully submitted",
                 "data" => $product
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => 500,
                 "message" => "Error submitting data",
-                "error" => $th->getMessage()
+                "error" => $e->getMessage()
             ], 500);
         }
     }
-
     public function update(Request $request, $id)
     {
         try {
-            $product = Product::find($id);
+            $product = Product::findOrFail($id);
 
             $product->nama_product = $request->nama_product;
             $product->jenis = $request->jenis;
@@ -80,48 +86,45 @@ class ProductController extends Controller
             if ($request->hasFile('gambar')) {
                 $file = $request->file('gambar');
                 $path = 'files/product/';
-                $nameFile = $file->getClientOriginalName();
 
-                $product->gambar = $path . $nameFile;
-
-                if (!File::isDirectory($path)) {
-                    File::makeDirectory($path, 0755, true, true);
-                }
-                $file->move($path, $nameFile);
+                $product->gambar = $this->handleFileUpload($file, $path);
             }
 
             $product->save();
 
-            
-        } catch (\Throwable $th) {
+            return response()->json([
+                "status" => 200,
+                "message" => "Data successfully updated",
+                "data" => $product
+            ]);
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => 500,
                 "message" => "Error updating data",
-                "error" => $th->getMessage()
+                "error" => $e->getMessage()
             ], 500);
         }
-        return response()->json([
-            "status" => 200,
-            "message" => "Data successfully updated",
-            "data" => $product
-        ]);
     }
-
     public function destroy(string $id)
     {
         try {
             $product = Product::findOrFail($id);
+
+            if (File::exists($product->gambar)) {
+                File::delete($product->gambar);
+            }
+
             $product->delete();
 
             return response()->json([
                 "status" => 200,
                 "message" => "Data successfully deleted"
             ]);
-        } catch (\Throwable $th) {
+        } catch (\Exception $e) {
             return response()->json([
                 "status" => 500,
                 "message" => "Error deleting data",
-                "error" => $th->getMessage()
+                "error" => $e->getMessage()
             ], 500);
         }
     }
