@@ -60,9 +60,10 @@
                 <h2 class="section-heading text-uppercase">Maps</h2>
                 <h3 class="section-subheading text-muted">Letak Lokasi Toko Devan Cell</h3>
             </div>
-            <iframe class="text-center" width="1300" height="700"
+            <iframe class="map-iframe"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3964.2823222185093!2d108.1775344735584!3d-6.485887263409887!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e6ec900744dcb7f%3A0xca7a6436039e7dd9!2sDevan%20Cell!5e0!3m2!1sid!2sid!4v1709803859898!5m2!1sid!2sid"
-                width="1100" height="450" style="border:0;" allowfullscreen="" loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
+                allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+                title="Google Maps showing the location of Devan Cell">
+            </iframe>
     </section>
 </body>
