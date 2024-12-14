@@ -58,9 +58,9 @@
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
                         <strong>Laporan & Total Pendapatan Bulan {{ $bulan }}:
-                        <span class="total-pemasukan-bulanan">
-                            Rp{{ number_format($totalPemasukanBulanan, 0, ',', '.') }}
-                        </span>
+                            <span class="total-pemasukan-bulanan">
+                                Rp{{ number_format($totalPemasukanBulanan, 0, ',', '.') }}
+                            </span>
                         </strong>
                     </div>
                     <div class="card-body">
@@ -102,7 +102,7 @@
                                                 <td>
                                                     @if ($item->productcust && $item->productcust->product)
                                                         <img src="{{ asset($item->productcust->product->gambar) }}"
-                                                            style="max-width: 100px">
+                                                            alt="gambar" style="max-width: 100px">
                                                     @else
                                                         No Image Available
                                                     @endif
