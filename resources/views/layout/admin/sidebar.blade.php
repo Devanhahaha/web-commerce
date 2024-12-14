@@ -7,13 +7,12 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
-                <button class="nav-link collapsed {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'active' : '' }}"
-                    href="#" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false"
-                    aria-controls="collapseLaporan" role="button">
+                <a class="nav-link collapsed {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'active' : '' }}"
+                   href="#" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false" aria-controls="collapseLaporan">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Laporan
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </button>
+                </a>
                 <div class="collapse {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'show' : '' }}"
                     id="collapseLaporan" aria-labelledby="headingLaporan" aria-controls="collapseLaporan">
                     <nav class="sb-sidenav-menu-nested nav" aria-label="Laporan Submenu">
@@ -30,8 +29,7 @@
                     </nav>
                 </div>
                 <a class="nav-link collapsed {{ request()->routeIs('pulsa.index', 'paket_data.index', 'bayar_tagihan.index', 'services.index') ? 'active' : '' }}"
-                    href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayanan" aria-expanded="false"
-                    aria-controls="collapseLayanan" role="button">
+                   href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayanan" aria-expanded="false" aria-controls="collapseLayanan">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Layanan
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
@@ -49,13 +47,11 @@
                             href="{{ route('services.index') }}">Service</a>
                     </nav>
                 </div>
-
                 <a class="nav-link {{ request()->routeIs('product.index') ? 'active' : '' }}"
-                    href="{{ route('product.index') }}">
+                   href="{{ route('product.index') }}">
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Product
                 </a>
-
             </div>
         </div>
         <div class="sb-sidenav-footer">
