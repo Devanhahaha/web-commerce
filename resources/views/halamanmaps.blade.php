@@ -35,13 +35,20 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav text-uppercase ms-auto py-4 py-lg-0">
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanhome.index') }}">Home</a></li>
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanservices.index') }}">Services</a></li>
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanproduct.index') }}">Product</a></li>
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanpayment.index') }}">Payment</a></li>
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamanmaps.index') }}">Maps</a></li>
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('halamancontact.index') }}">Contact</a></li>
-                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('login') }}">Sign In</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link"
+                            href="{{ route('halamanhome.index') }}">Home</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link"
+                            href="{{ route('halamanservices.index') }}">Services</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link"
+                            href="{{ route('halamanproduct.index') }}">Product</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link"
+                            href="{{ route('halamanpayment.index') }}">Payment</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link"
+                            href="{{ route('halamanmaps.index') }}">Maps</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link"
+                            href="{{ route('halamancontact.index') }}">Contact</a></li>
+                    <li class="nav-item"><a class="btn btn-primary nav-link" href="{{ route('login') }}">Sign In</a>
+                    </li>
                 </ul>
             </div>
         </div>
