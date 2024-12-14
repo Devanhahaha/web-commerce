@@ -14,27 +14,27 @@
                 </div>
             </div>
 
-            @if(session()->has('status'))
+            @if (session()->has('status'))
                 <div class="alert alert-success" role="alert">
                     {{ session('status') }}
                 </div>
             @endif
 
-            @if(session()->has('success'))
+            @if (session()->has('success'))
                 <div class="alert alert-success" role="alert">
                     {{ session('success') }}
                 </div>
             @endif
 
-            @if(session()->has('error'))
+            @if (session()->has('error'))
                 <div class="alert alert-danger" role="alert">
                     {{ session('error') }}
                 </div>
             @endif
 
             @foreach ($transaksi->groupBy(function ($item) {
-                return $item->created_at->format('d F Y');
-            }) as $tanggal => $transaksiHarian)
+            return $item->created_at->format('d F Y');
+        }) as $tanggal => $transaksiHarian)
                 <div class="card mb-4 report-card" data-type="all">
                     <div class="card-header">
                         <i class="fas fa-table me-1"></i>
@@ -70,12 +70,14 @@
                                 @foreach ($transaksiHarian->where('jenis_transaksi', 'PRODUCT')->all() as $item)
                                     <tr class="report-row" data-type="PRODUCT">
                                         <td>{{ $loop->iteration }}</td>
-                                        <td><img src="{{ asset($item->productcust->product->gambar) }}" style="max-width: 100px"></td>
+                                        <td><img src="{{ asset($item->productcust->product->gambar) }}" alt="gambar"
+                                                style="max-width: 100px"></td>
                                         <td>{{ $item->productcust->product->nama_product }}</td>
                                         <td>{{ $item->productcust->product->jenis }}</td>
                                         <td>{{ $item->productcust->product->merk }}</td>
                                         <td>{{ $item->productcust->product->deskripsi }}</td>
-                                        <td style="text-align: right;">{{ number_format($item->productcust->product->nominal, 0, ',', '.') }}</td>
+                                        <td style="text-align: right;">
+                                            {{ number_format($item->productcust->product->nominal, 0, ',', '.') }}</td>
                                         <td>{{ $item->jenis_pembayaran }}</td>
                                         <td>{{ $item->user->first_name }}</td>
                                         <td>{{ $item->productcust->kurir }}</td>
@@ -92,13 +94,16 @@
                                             @if ($item->status === 'sudah di kirim')
                                                 <form action="{{ route('orders.confirm', $item->id) }}" method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-sm btn-primary mt-2">Konfirmasi Barang Telah Sampai</button>
+                                                    <button type="submit" class="btn btn-sm btn-primary mt-2">Konfirmasi
+                                                        Barang Telah Sampai</button>
                                                 </form>
                                             @endif
                                             @if ($item->status === 'belum di kirim')
-                                                <form action="{{ route('orders.cancel_request', $item->id) }}" method="POST">
+                                                <form action="{{ route('orders.cancel_request', $item->id) }}"
+                                                    method="POST">
                                                     @csrf
-                                                    <button type="submit" class="btn btn-sm btn-danger mt-2">Batalkan Pesanan</button>
+                                                    <button type="submit" class="btn btn-sm btn-danger mt-2">Batalkan
+                                                        Pesanan</button>
                                                 </form>
                                             @endif
                                         </td>
@@ -139,17 +144,21 @@
         }
     </script>
     <style>
-        .table th, .table td {
+        .table th,
+        .table td {
             vertical-align: middle;
             text-align: center;
         }
+
         .table th {
             width: auto;
         }
+
         .table img {
             max-width: 100px;
             height: auto;
         }
+
         .card-body {
             overflow-x: auto;
         }
