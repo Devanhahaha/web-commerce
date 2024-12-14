@@ -19,7 +19,6 @@
                     <form action="{{ route('product.update', $product->id) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method('PUT')
-
                         <!-- Add your form fields here -->
                         <div class="mb-3">
                             <label for="name" class="form-label">Product Name</label>
@@ -47,10 +46,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Gambar</label>
-                            <input type="file" accept=".png, .jpg, .jpeg, .svg, .webp" class="form-control" id="gambar" name="gambar"> 
+                            <input type="file" accept=".png, .jpg, .jpeg, .svg, .webp" class="form-control"
+                                id="gambar" name="gambar">
                         </div>
-                          
-
                         <button type="submit" class="btn btn-primary">Save Changes</button>
                     </form>
                 </div>
