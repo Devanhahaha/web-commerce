@@ -7,13 +7,13 @@
                     <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
                     Dashboard
                 </a>
-                <a class="nav-link collapsed {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'active' : '' }}"
+                <button class="nav-link collapsed {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'active' : '' }}"
                     href="#" data-bs-toggle="collapse" data-bs-target="#collapseLaporan" aria-expanded="false"
                     aria-controls="collapseLaporan" role="button">
                     <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
                     Laporan
                     <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
-                </a>
+                </button>
                 <div class="collapse {{ request()->routeIs('laporanpulsa.index', 'laporanpaketdata.index', 'laporanbayartagihan.index', 'laporanservices.index', 'laporanpemesananproduct.index') ? 'show' : '' }}"
                     id="collapseLaporan" aria-labelledby="headingLaporan" aria-controls="collapseLaporan">
                     <nav class="sb-sidenav-menu-nested nav" aria-label="Laporan Submenu">
